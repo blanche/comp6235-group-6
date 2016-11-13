@@ -1,8 +1,9 @@
-
-import requests
 import bson
+import requests
 import xmltodict
-from db.connection import DbConnection
+
+from src.db.connection import DbConnection
+
 
 def get_southampton_resturants_by_authorities_id(id):
     """

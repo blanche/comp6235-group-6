@@ -1,8 +1,10 @@
-import requests
-from difflib import SequenceMatcher
-from db.connection import DbConnection
-import bson
 import time
+from difflib import SequenceMatcher
+
+import bson
+import requests
+
+from src.db.connection import DbConnection
 
 API_KEY = "AIzaSyCp44cd14BYXibwjShWTltAQEosC0tfU-A"
 s = requests.Session()
