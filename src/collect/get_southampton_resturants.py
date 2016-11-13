@@ -5,17 +5,19 @@ import xmltodict
 from src.db.connection import DbConnection
 
 
-def get_southampton_resturants_by_authorities_id(id):
+def get_southampton_resturants_by_authorities_id(identifier):
     """
     gets all resturants the has authorites id {id}. NOT WORKING AS API IS BROKE
 
-    :param id:  local autorities id
+    :param identifier:  local autorities id
     :return:
     """
-    headers = {"x-api-version": "2", "accept": "application/json", "content-type":"application/json"}
-    r = requests.get('http://api.ratings.food.gov.uk/Establishments?localAuthorityId={}'.format(id),headers=headers)
+    headers = {"x-api-version": "2", "accept": "application/json", "content-type": "application/json"}
+    r = requests.get('http://api.ratings.food.gov.uk/Establishments?localAuthorityId={}'.format(identifier),
+                     headers=headers)
     establishments = r.json()
     return r.json()
+
 
 def get_authority_id(name):
     """
@@ -25,11 +27,12 @@ def get_authority_id(name):
     :return: Id
     """
 
-    headers = {"x-api-version": "2", "accept": "application/json", "content-type":"application/json"}
+    headers = {"x-api-version": "2", "accept": "application/json", "content-type": "application/json"}
     r = requests.get('http://api.ratings.food.gov.uk/Authorities/basic', headers=headers)
     authorities = r.json()["authorities"]
     southampton_id = [x["LocalAuthorityId"] for x in authorities if x["Name"] == name.capitalize()]
     return southampton_id[0]
+
 
 def get_static_soton_data():
     """
@@ -49,6 +52,7 @@ def update_hygine_data_db(data):
     """
     db = DbConnection().get_resturant_db()
     db.hygine_data.insert_many(data)
+
 
 if __name__ == "__main__":
     data = get_static_soton_data()
