@@ -1,0 +1,22 @@
+architecture
+
+- python 3.5 + flask
+- d3 for visualization
+- mongodb to store data
+
+next tasks:
+- create git repos
+- gather google places data for Hampshire (alex)
+- gather yelp data for Hampshire (lukas)
+- gather food hygiene data for Hampshire (guan) (see DS tutorial)
+- scrape just-eat (otku)
+download/scrape all data and everything you can!
+====
+after that:
+- merge food review data
+- clean data
+- develop something to combine ratings and hygiene data (create common ID)
+
+
+next meeting on Sunday
+- implementation should be kind of ready - purpose is to check how far
