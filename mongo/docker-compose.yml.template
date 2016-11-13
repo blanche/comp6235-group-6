@@ -1,0 +1,14 @@
+version: '2'
+services:
+    mongo:
+        image: mongo
+        ports:
+            - "27017:27017"
+        volumes:
+            - /your/path/:/data/db
+    mongo-express:
+        image: mongo-express
+        links:
+            - mongo:mongo
+        ports:
+            - "8081:8081"
