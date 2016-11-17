@@ -1,0 +1,40 @@
+Meeting notes 16/11/2016
+Otku, Alex, Lukas & Elena
+
+Status report
+	we are currently collecting data
+		google places, yelp, just eat
+		programming of that phase mostly finished
+		problem : we only ever get three reviews
+		next step:
+			merge/clean data
+			matched on GPS data
+	
+	explain process & architecture overview
+
+only getting three reviews:
+	Elena: ask yelp about the pricing and that we are students
+
+Elena: 
+	we should collect hygiene data and reviews over time to also do time analysis
+
+Elena:
+	find sentiment analysis dictionary to search for restaurant "sick, ill"
+	compile dictionary
+
+do correlation analysis in panda or scikit
+
+use time as a feature
+
+
+next meeting
+	redefine questions we are asking 
+	create graphs for answering the questions 
+
+	next meeting on the 5th 1000
+	
+	Elena wants to talk to wenli
+		possible task apart from programming:
+			prepare presentation
+			what influences reviews
+			what influences perception
