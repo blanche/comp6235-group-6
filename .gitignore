@@ -1,17 +1,23 @@
+
+# use template file instead of checking in actual docker-compose file
+mongo/docker-compose.yml
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
 # C extensions
 *.so
+
 # Libraries
 lib/
+
 # Jetbrains
 .idea/
+
 # virtualenv
 .venv/
-venv/
+*venv/
 
-#idea
-idea
-idea/
