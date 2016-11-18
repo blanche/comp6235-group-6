@@ -47,7 +47,9 @@ def update_hygine_data_db(data):
     :param data: dict of documents to add
     """
     db = DbConnection().get_resturant_db()
-    db.hygine_data.insert_many(data)
+    for e in data:
+        key = bson.son.SON({"FHRSID" : e["FHRSID"]})
+        db.hygine_data.update(key, e, upsert=True)
 
 if __name__ == "__main__":
     data = get_static_soton_data()
