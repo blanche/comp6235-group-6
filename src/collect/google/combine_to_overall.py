@@ -1,6 +1,8 @@
-from src.db.connection import DbConnection
 import bson
-import pymongo
+
+from db.connection import DbConnection
+
+
 # var docs = db.hygine_data.find({})
 # docs.forEach(function(doc){db.overall.insert(doc)});
 

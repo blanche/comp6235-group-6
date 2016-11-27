@@ -2,7 +2,8 @@ import bson
 import requests
 import xmltodict
 
-from src.db.connection import DbConnection
+from db.connection import DbConnection
+from src.collect.hygine_data.hygine_data_links import get_hygine_data_source
 
 
 def get_southampton_resturants_by_authorities_id(identifier):
@@ -34,13 +35,15 @@ def get_authority_id(name):
     return southampton_id[0]
 
 
-def get_static_soton_data():
+def get_static_soton_data(town="Southampton"):
     """
     Gets static data from food standards website for southampton in xml format and converts it to dict
     :return: southampton hygine data as dict
     """
-
-    r = requests.get('http://ratings.food.gov.uk/OpenDataFiles/FHRS877en-GB.xml')
+    town_to_link_dict = get_hygine_data_source()
+    url = town_to_link_dict[town]
+    print(url)
+    r = requests.get(url)
     southampton_data = xmltodict.parse(r.text)['FHRSEstablishment']['EstablishmentCollection']["EstablishmentDetail"]
     return southampton_data
 

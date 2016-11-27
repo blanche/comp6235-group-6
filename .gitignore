@@ -21,3 +21,10 @@ lib/
 .venv/
 *venv/
 
+#node_modules
+node_modules/
+web/node_modules/
+
+#bower_components
+bower_components/
+web/bower_components/

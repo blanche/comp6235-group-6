@@ -4,7 +4,7 @@ from difflib import SequenceMatcher
 import bson
 import requests
 
-from src.db.connection import DbConnection
+from db.connection import DbConnection
 
 API_KEY = "AIzaSyCp44cd14BYXibwjShWTltAQEosC0tfU-A"
 s = requests.Session()

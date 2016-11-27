@@ -16,7 +16,6 @@ class DbConnection:
             cls.client = MongoClient(cls.host, cls.port)
         return cls.client
 
-    @classmethod
     def get_resturant_db(self):
         return self.client.resturant_data
 
