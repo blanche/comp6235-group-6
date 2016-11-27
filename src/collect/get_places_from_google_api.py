@@ -57,30 +57,30 @@ def _get_place_details_by_id(place_id):
     return data
 
 
-def get_place_details_if_similar(google_data_list, establishment_hygine):
+def get_place_details_if_similar(google_data_list, establishment_hygiene):
     """
-    Compares names found in google_data_list to hygine place name. If similar returns match else None
+    Compares names found in google_data_list to hygiene place name. If similar returns match else None
 
     :param google_data_list:
-    :param hygine_place_name: name of establishment from hygine data
+    :param hygiene_place_name: name of establishment from hygiene data
     :return: Most similar place or None
 
     """
 
-    hygine_place_name = establishment_hygine["BusinessName"]
-    print("{} vs {}".format(hygine_place_name, [x["name"] for x in google_data_list]))
-    most_likely_place = max([(place, similar(place["name"], hygine_place_name)) for place in google_data_list],
+    hygiene_place_name = establishment_hygiene["BusinessName"]
+    print("{} vs {}".format(hygiene_place_name, [x["name"] for x in google_data_list]))
+    most_likely_place = max([(place, similar(place["name"], hygiene_place_name)) for place in google_data_list],
                             key=lambda x: x[1])
 
-    if most_likely_place[1] > 0.5 or hygine_place_name in most_likely_place[0]["name"]:
+    if most_likely_place[1] > 0.5 or hygiene_place_name in most_likely_place[0]["name"]:
         most_likely_place_id = most_likely_place[0]["place_id"]
         print("Gone with {}".format(most_likely_place[0]["name"]))
         place_details = _get_place_details_by_id(most_likely_place_id)
         return place_details["result"]
     else:
         one_contains_other = [x for x in google_data_list
-                              if x["name"].strip().lower() in hygine_place_name.strip().lower() or
-                              hygine_place_name.strip().lower() in x["name"].strip().lower()]
+                              if x["name"].strip().lower() in hygiene_place_name.strip().lower() or
+                              hygiene_place_name.strip().lower() in x["name"].strip().lower()]
         if len(one_contains_other) == 1:
             print("Gone with {}".format(one_contains_other[0]["name"]))
             place_details = _get_place_details_by_id(one_contains_other[0]["place_id"])
@@ -89,9 +89,9 @@ def get_place_details_if_similar(google_data_list, establishment_hygine):
         # Check see if cause names are different length
         else:
             reason = "google found: {} none match search name : {}, Not close enough to add".format(
-                [x["name"] for x in google_data_list], hygine_place_name)
-            establishment_hygine["Reason"] = reason
-            print(establishment_hygine["Reason"])
+                [x["name"] for x in google_data_list], hygiene_place_name)
+            establishment_hygiene["Reason"] = reason
+            print(establishment_hygiene["Reason"])
             return None
 
 
@@ -113,8 +113,8 @@ def get_google_places_for_current_of_higene_data_establishments():
     # DB
     not_found_list = []
     found_list = []
-    db = DbConnection().get_resturant_db()
-    establishments = [est for est in db.hygine_data.find()]
+    db = DbConnection().get_restaurant_db()
+    establishments = [est for est in db.hygiene_data.find()]
     establishments = establishments[1:3]
     for e in establishments:
         time.sleep(1)
@@ -137,5 +137,5 @@ def get_google_places_for_current_of_higene_data_establishments():
 
 if __name__ == "__main__":
     get_google_places_for_current_of_higene_data_establishments()
-    db = DbConnection().get_resturant_db()
+    db = DbConnection().get_restaurant_db()
     [print(x["BusinessName"], x["Reason"], x["GoogleSearchUrl"]) for x in db.google_reviews_not_found.find()]

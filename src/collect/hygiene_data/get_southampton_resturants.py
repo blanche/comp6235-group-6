@@ -3,12 +3,12 @@ import requests
 import xmltodict
 
 from db.connection import DbConnection
-from src.collect.hygine_data.hygine_data_links import get_hygine_data_source
+from src.collect.hygiene_data.hygiene_data_links import get_hygiene_data_source
 
 
-def get_southampton_resturants_by_authorities_id(identifier):
+def get_southampton_restaurants_by_authorities_id(identifier):
     """
-    gets all resturants the has authorites id {id}. NOT WORKING AS API IS BROKE
+    gets all restaurants the has authorites id {id}. NOT WORKING AS API IS BROKE
 
     :param identifier:  local autorities id
     :return:
@@ -38,9 +38,9 @@ def get_authority_id(name):
 def get_static_soton_data(town="Southampton"):
     """
     Gets static data from food standards website for southampton in xml format and converts it to dict
-    :return: southampton hygine data as dict
+    :return: southampton hygiene data as dict
     """
-    town_to_link_dict = get_hygine_data_source()
+    town_to_link_dict = get_hygiene_data_source()
     url = town_to_link_dict[town]
     print(url)
     r = requests.get(url)
@@ -48,17 +48,17 @@ def get_static_soton_data(town="Southampton"):
     return southampton_data
 
 
-def update_hygine_data_db(data):
+def update_hygiene_data_db(data):
     """
-    adds hygine data to specified mongodb database
+    adds hygiene data to specified mongodb database
     :param data: dict of documents to add
     """
-    db = DbConnection().get_resturant_db()
+    db = DbConnection().get_restaurant_db()
     for e in data:
         key = bson.son.SON({"FHRSID" : e["FHRSID"]})
-        db.hygine_data.update(key, e, upsert=True)
+        db.hygiene_data.update(key, e, upsert=True)
 
 
 if __name__ == "__main__":
     data = get_static_soton_data()
-    update_hygine_data_db([bson.son.SON(establishment) for establishment in data])
+    update_hygiene_data_db([bson.son.SON(establishment) for establishment in data])

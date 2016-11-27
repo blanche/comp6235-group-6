@@ -1,5 +1,5 @@
 
-def get_hygine_data_source():
+def get_hygiene_data_source():
 
     return {
     "Babergh": "http://ratings.food.gov.uk/OpenDataFiles/FHRS297en-GB.xml",

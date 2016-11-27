@@ -4,7 +4,7 @@ from pymongo import MongoClient
 class DbConnection:
     host = "localhost"
     port = 27017
-    db = "resturant_data"
+    db = "restaurant_data"
     client = None
 
     def __init__(self):
@@ -16,8 +16,8 @@ class DbConnection:
             cls.client = MongoClient(cls.host, cls.port)
         return cls.client
 
-    def get_resturant_db(self):
-        return self.client.resturant_data
+    def get_restaurant_db(self):
+        return self.client.restaurant_data
 
     def __del__(self):
         self.client.close()
