@@ -3,7 +3,7 @@ import requests
 import xmltodict
 
 from db.connection import DbConnection
-from src.collect.hygiene_data.hygiene_data_links import get_hygiene_data_source
+from collect.hygiene_data.hygiene_data_links import get_hygiene_data_source
 
 
 def get_southampton_restaurants_by_authorities_id(identifier):
