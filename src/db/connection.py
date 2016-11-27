@@ -17,7 +17,7 @@ class DbConnection:
         return cls.client
 
     def get_restaurant_db(self):
-        return self.client.restaurant_data
+        return self.client[self.db]
 
     def __del__(self):
         self.client.close()
