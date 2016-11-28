@@ -5,29 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1becfbe9-9ef7-4bda-bed3-2f94301af797" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/[object BSON].bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/[object BSON].metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/google_reviews_found.bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/google_reviews_found.metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/google_reviews_not_found.bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/google_reviews_not_found.metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/hygine_data.bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/hygine_data.metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/overall.bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/overall.metadata.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/users.bson" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dump/dump/resturant_data/users.metadata.json" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db/commands" afterPath="$PROJECT_DIR$/src/db/commands" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db/connection.py" afterPath="$PROJECT_DIR$/src/db/connection.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/collect/get_places_from_google_api.py" afterPath="$PROJECT_DIR$/src/collect/google/get_places_from_google_api.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/collect/hygine_data/get_southampton_resturants.py" afterPath="$PROJECT_DIR$/src/collect/hygiene_data/get_southampton_restaurants.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/collect/hygine_data/hygine_data_links.py" afterPath="$PROJECT_DIR$/src/collect/hygiene_data/hygiene_data_links.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/collect/yelp/yelp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/run.py" afterPath="$PROJECT_DIR$/server/run.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/collect/comments/update_comment_new_fhrsid.py" afterPath="$PROJECT_DIR$/src/collect/comments/update_comment_new_fhrsid.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/collect/google/combine_to_overall_and_comments.py" afterPath="$PROJECT_DIR$/src/collect/google/combine_to_overall_and_comments.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/collect/google/get_places_and_add_to_overall.py" afterPath="$PROJECT_DIR$/src/collect/google/get_places_and_add_to_overall.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/collect/overall/update_overall_fhrsid.py" afterPath="$PROJECT_DIR$/src/collect/overall/update_overall_fhrsid.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <ignored path="group.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,16 +47,6 @@
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hygiene_data_links.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/collect/hygiene_data/hygiene_data_links.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -151,7 +121,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="commands" pinned="false" current-in-tab="true">
+      <file leaf-file-name="commands" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/db/commands">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -161,13 +131,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update_overall_fhrsid.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/collect/overall/update_overall_fhrsid.py">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yelp.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/collect/yelp/yelp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
               <folding>
-                <element signature="e#1#43#0" expanded="true" />
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -225,7 +205,6 @@
         <option value="$PROJECT_DIR$/web/app/app.component.ts" />
         <option value="$PROJECT_DIR$/src/collect/hygine_data/hygine_data_xml.py" />
         <option value="$PROJECT_DIR$/src/collect/hygine_data/get_southampton_resturants.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/doc/test.json" />
         <option value="$PROJECT_DIR$/db/connection.py" />
         <option value="$PROJECT_DIR$/src/collect/overall/create_overall.py" />
@@ -238,6 +217,7 @@
         <option value="$PROJECT_DIR$/src/collect/google/get_places_from_google_api.py" />
         <option value="$PROJECT_DIR$/src/collect/google/combine_to_overall_and_comments.py" />
         <option value="$PROJECT_DIR$/server/run.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -300,20 +280,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -337,11 +303,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/collect/yelp" />
       <recent name="$PROJECT_DIR$/src/collect/google" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/src/collect" />
-      <recent name="$PROJECT_DIR$/src/collect/hygine_data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -748,13 +714,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.virtualenvs/foundationsGroup/lib/python3.5/site-packages/xmltodict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="310" column="0" selection-start-line="310" selection-start-column="0" selection-end-line="310" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -835,14 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -970,6 +921,24 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/collect/yelp/yelp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
