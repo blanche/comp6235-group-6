@@ -1,12 +1,12 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-from db.connection import DbConnection
+from src.db.connection import DbConnection
 from bson import json_util
 import json
 
 app = Flask(__name__)
 api = Api(app)
-db = DbConnection().get_resturant_db()
+db = DbConnection().get_restaurant_db()
 
 todos = {}
 

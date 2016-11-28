@@ -1,2 +1,0 @@
-mongorestore --db database_name path_to_bson_file
-mongodump --db database_name --collection collection_name

@@ -1,5 +1,5 @@
 
-from db.connection import DbConnection
+from src.db.connection import DbConnection
 import bson
 
 def create_comments():

@@ -1,14 +1,14 @@
 import bson
 
-from db.connection import DbConnection
+from src.db.connection import DbConnection
 
 
-# var docs = db.hygine_data.find({})
+# var docs = db.hygiene_data.find({})
 # docs.forEach(function(doc){db.overall.insert(doc)});
 
 
 def combine_google_found_to_overall():
-    db = DbConnection().get_resturant_db()
+    db = DbConnection().get_restaurant_db()
     google_data = db.google_reviews_found.find({})
 
     for e in google_data:
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     #types
 
 
-    #Hygine Data
+    #Hygiene Data
     #FHRSID
     #Buisness Name
     #Postcode
