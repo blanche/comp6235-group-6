@@ -20,12 +20,6 @@ def combine_google_found_to_overall():
             "geometry" : e["geometry"],
         }
 
-        if "reviews" in e.keys():
-            add_to_overall["reviews"] = e["reviews"]
-        else:
-            add_to_overall["reviews"] = []
-
-
         if "rating" in e.keys():
             add_to_overall["rating"] = e["rating"]
         else:
@@ -38,15 +32,28 @@ def combine_google_found_to_overall():
 
         key = bson.son.SON({"FHRSID": e["FHRSID"]})
         data = bson.son.SON({"google":add_to_overall})
-        print(e["FHRSID"])
         db.overall.find_and_modify(query=key, update={"$set": data}, upsert=False,
                                      full_response=True)
 
     print(google_data.count())
 
+def combine_google_with_comments():
+    db = DbConnection().get_resturant_db()
+    google_data = db.google_reviews_found.find({})
+    add_to_overall = {}
+    for e in google_data:
+        if "reviews" in e.keys():
+            add_to_overall["reviews"] = e["reviews"]
+        else:
+            add_to_overall["reviews"] = []
+        key = bson.son.SON({"FHRSID": e["FHRSID"]})
+        data = bson.son.SON({"google": add_to_overall})
+        db.comments.find_and_modify(query=key, update={"$set": data}, upsert=False,
+                                   full_response=True)
 
 if __name__ == "__main__":
     combine_google_found_to_overall()
+    combine_google_with_comments()
 
 
     #Google
