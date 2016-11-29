@@ -14,5 +14,5 @@ lib/
 
 # virtualenv
 .venv/
-venv/
+*venv/
 

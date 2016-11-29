@@ -1,19 +1,19 @@
 import requests
 import logging
 import datetime
-from pymongo import MongoClient
+import difflib
+
+from db.connection import DbConnection
+from pymongo import IndexModel, GEO2D
 
 auth_url = "https://api.yelp.com/oauth2/token"
 search_url = "https://api.yelp.com/v3/businesses/search"
 review_url = "https://api.yelp.com/v3/businesses/{}/reviews"
 
-client = MongoClient('localhost', 27017)
-db = client['hygiene']
+db = DbConnection().get_restaurant_db()
 yelp = db['yelp']
 yelp_reviews = db['yelp_review']
-
-yelp.delete_many({})
-yelp_reviews.delete_many({})
+hygiene = db['hygiene']
 
 
 def get_oauth_token():
@@ -52,6 +52,8 @@ def get_reviews():
     headers = {
         'authorization': "Bearer " + token
     }
+
+    yelp_reviews.delete_many({})
     for business in yelp.find():
         response = requests.get(review_url.format(business['id']), headers=headers).json()
         reviews = response['reviews']
@@ -75,10 +77,36 @@ def setup_logger():
     return log
 
 
-logger = setup_logger()
+def match_yelp_with_hygiene_data():
+    for y in yelp.find():
+        yelp_name = y["name"].lower()
+        print(yelp_name)
+        closest = [0, None]
+        for h in hygiene.find(
+                {"Geocode":
+                     {"$near":
+                          {"$geometry":
+                               {"type": "Point",
+                                "coordinates": [y["coordinates"]["longitude"], y["coordinates"]["latitude"]]
+                                }
+                           }
+                      }
+                 }).limit(20):
+            ratio = difflib.SequenceMatcher(lambda x: x == " ", yelp_name, h["BusinessName"].lower()).ratio()
+            if ratio > closest[0]:
+                closest = [ratio, h]
+        print("MATCH: " + str(closest[0]) + " = " + closest[1]["BusinessName"])
 
-token = get_oauth_token()
-search("Hampshire")
-get_reviews()
 
-client.close()
+# def create_geo_index():
+#     geo_index = IndexModel([("coordinates", GEO2D)])
+#     DbConnection().get_restaurant_db().hygiene.create_indexes([geo_index])
+
+
+if __name__ == "__main__":
+    logger = setup_logger()
+
+    # token = get_oauth_token()
+    # search("Southampton")
+    match_yelp_with_hygiene_data()
+    # get_reviews()
