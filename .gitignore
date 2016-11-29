@@ -1,3 +1,8 @@
+
+# use template file instead of checking in actual docker-compose file
+mongo/docker-compose.yml
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -16,3 +21,10 @@ lib/
 .venv/
 *venv/
 
+#node_modules
+node_modules/
+web/node_modules/
+
+#bower_components
+bower_components/
+web/bower_components/
