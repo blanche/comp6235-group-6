@@ -4,6 +4,7 @@ import difflib
 import requests
 from pymongo import IndexModel, GEOSPHERE
 
+from collect.hygiene_data.hygiene_data_links import get_hygiene_data_source
 from util import setup_logger, restaurant_stopwords, name_clean_re
 from db.connection import DbConnection
 
@@ -25,8 +26,7 @@ def search_by_location(location):
     page_size = 50  # maximum limit for api is 50
     current_offset = 0
 
-
-    yelp_logger.debug("loading data from yelp")
+    yelp_logger.debug("loading {} from yelp".format(location))
     bulk_op = yelp_data.initialize_ordered_bulk_op()
     now = datetime.datetime.now()
     while total > current_offset:
@@ -35,16 +35,21 @@ def search_by_location(location):
             "limit": page_size,
             "offset": current_offset
         }
-        response = requests.get(search_url, headers=headers, params=querystring).json()
-        total = response['total']
+        r = requests.get(search_url, headers=headers, params=querystring)
 
-        for business in response['businesses']:
-            business['x_create_date'] = now
-            clean(business)
-            bulk_op.find({"id": business["id"]}).upsert().update_one({"$set": business})
+        if r.status_code == 200:
+            response = r.json()
+            total = response['total']
 
-        current_offset += page_size
-        yelp_logger.debug("Progress {}/{}".format(current_offset, total))
+            for business in response['businesses']:
+                business['x_create_date'] = now
+                clean(business)
+                bulk_op.find({"id": business["id"]}).upsert().update_one({"$set": business})
+
+            current_offset += page_size
+            yelp_logger.debug("Progress {}/{}".format(current_offset, total))
+        else:
+            yelp_logger.error(r)
 
     yelp_logger.debug("executing bulk update")
     insert_response = bulk_op.execute()
@@ -115,8 +120,8 @@ def match_yelp_with_hygiene_data():
                     update = True
                 elif closest[0] > 0.5:
                     yelp_logger.debug("MAYBE " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
-                # else:
-                #     print("NO " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
+                    # else:
+                    #     print("NO " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
         if update:
             matched += 1
             y["FHRSID"] = h['FHRSID']
@@ -136,6 +141,21 @@ def create_geo_index():
     yelp_data.create_indexes([geo_index])
 
 
+def load_all():
+    total = len(get_hygiene_data_source())
+    progress = 1
+    yelp_loaded = DbConnection().get_restaurant_db().yelp_loaded
+    for key in get_hygiene_data_source().keys():
+        search_key = {"name": key}
+        if yelp_loaded.count(search_key) == 0:
+            search_by_location(key)
+            yelp_loaded.insert(search_key)
+        else:
+            yelp_logger.debug("skipping {} because it was already loaded".format(key))
+        yelp_logger.info("Progress: {}/{}".format(progress, total))
+        progress += 1
+
+
 yelp_logger = setup_logger("yelp")
 
 if __name__ == "__main__":
@@ -149,7 +169,8 @@ if __name__ == "__main__":
     yelp_review_data = db['yelp_review_data']
     hygiene_data = con.get_hygiene_collection(db)
 
-    # token = get_oauth_token()
+    token = get_oauth_token()
+    load_all()
     # search_by_location("Southampton")
     # create_geo_index()
     match_yelp_with_hygiene_data()
