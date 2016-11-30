@@ -1,7 +1,7 @@
 import bson
 
 from src.db.connection import DbConnection
-
+from src.util import setup_logger
 
 # var docs = db.hygiene_data.find({})
 # docs.forEach(function(doc){db.overall.insert(doc)});
@@ -10,6 +10,9 @@ from src.db.connection import DbConnection
 def combine_google_found_to_overall():
     db = DbConnection().get_restaurant_db()
     google_data = db.google_reviews_found.find({})
+    overall = DbConnection().get_overall_collection(db)
+    bulk_op = overall.initialize_ordered_bulk_op()
+    google_logger = setup_logger("google")
 
     for e in google_data:
         add_to_overall = {
@@ -30,12 +33,13 @@ def combine_google_found_to_overall():
         else:
             add_to_overall["permanently_closed"] = False
 
-        key = bson.son.SON({"FHRSID": e["FHRSID"]})
-        data = bson.son.SON({"google":add_to_overall})
-        db.overall.find_and_modify(query=key, update={"$set": data}, upsert=False,
-                                     full_response=True)
+        bulk_op.find({"FHRSID": e["FHRSID"]}).upsert().update({"$set": {"google": add_to_overall}})
 
-    print(google_data.count())
+    insert_response = bulk_op.execute()
+    if "nUpserted" in insert_response:
+        google_logger.debug("inserted " + str(insert_response["nUpserted"]) + " business")
+    if "nModified" in insert_response:
+        google_logger.debug("updated " + str(insert_response["nModified"]) + " business")
 
 def combine_google_with_comments():
     db = DbConnection().get_resturant_db()
