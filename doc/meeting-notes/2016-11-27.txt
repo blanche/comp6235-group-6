@@ -1,0 +1,70 @@
+meeting notes 2016/11/27
+
+VM was created
+	Lukas will set up Mongo db an send out connection
+
+	client = MongoClient("svm-lw4u16-comp6235-group-6.ecs.soton.ac.uk", 27018)
+	client.restaurants.authenticate('user', 'banana4')
+
+data store architecture
+	each collector stores each own data structure and syncs into an overall collection
+	overall collection stores
+		FHRSID
+			justeat
+				(id?)
+				avg rating
+				food rating
+				delivery rating
+				service rating
+			google
+				id
+				rating
+				type
+				(anything else?)
+			yelp
+				id
+				rating
+				review_count
+				categories
+				price
+			hygiene data
+				rating
+				type
+				local authority
+				rating date
+				name
+				scores
+				postcode
+				geocode
+
+each implementation has to provide functionality to
+	- load data
+	- clean data
+	- sync data into to overall collection
+	- matched/not matched and count statistics
+
+
+Analyze
+	rating vs price
+	rating vs hygiene
+	price vs hygiene
+	region vs region
+	chains vs each other vs region
+	google/justeat/yelp vs each other
+
+	do correlation analysis (e.g. R value) 
+
+
+todos:
+	- create heat map in d3 
+	- normalize scores for 1-5
+	- normalize price for 1-5
+	- do correlation analysis on previous questions
+
+	till tonight
+		- merge existing code to master
+		- put stuff into overall
+
+	next meeting on the 31.11 1100:
+		- import as much data as possible in agreed structure
+		- start correlation analysis
