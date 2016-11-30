@@ -1,19 +1,11 @@
-import requests
-import logging
 import datetime
 import difflib
 
+import requests
+from pymongo import IndexModel, GEOSPHERE
+
+from util import setup_logger, restaurant_stopwords, name_clean_re
 from db.connection import DbConnection
-from pymongo import IndexModel, GEO2D
-
-auth_url = "https://api.yelp.com/oauth2/token"
-search_url = "https://api.yelp.com/v3/businesses/search"
-review_url = "https://api.yelp.com/v3/businesses/{}/reviews"
-
-db = DbConnection().get_restaurant_db()
-yelp = db['yelp']
-yelp_reviews = db['yelp_review']
-hygiene = db['hygiene']
 
 
 def get_oauth_token():
@@ -25,27 +17,51 @@ def get_oauth_token():
     return oauth_token
 
 
-def search(location):
-    querystring = {
-        "location": location,
-        "limit": 3,
-        "offset": 0
-    }
+def search_by_location(location):
     headers = {
         'authorization': "Bearer " + token
     }
-    response = requests.get(search_url, headers=headers, params=querystring).json()
-    total = response['total']
-    logger.debug("search return " + str(total) + " total business")
-    businesses = response['businesses']
+    total = 99999
+    page_size = 50  # maximum limit for api is 50
+    current_offset = 0
 
+    bulk_op = yelp_data.initialize_ordered_bulk_op()
     now = datetime.datetime.now()
-    for business in businesses:
-        business['x_create_date'] = now
-    yelp.delete_many({})
+    while total > current_offset:
+        querystring = {
+            "location": location,
+            "limit": page_size,
+            "offset": current_offset
+        }
+        response = requests.get(search_url, headers=headers, params=querystring).json()
+        total = response['total']
 
-    yelp.insert(businesses)
-    logger.debug("inserting " + str(len(businesses)) + "  business")
+        for business in response['businesses']:
+            business['x_create_date'] = now
+            clean(business)
+            bulk_op.find({"id": business["id"]}).upsert().update_one({"$set": business})
+
+        current_offset += page_size
+        logger.debug("search return " + str(total) + " total business")
+
+    insert_response = bulk_op.execute()
+
+    logger.debug("search return " + str(total) + " total business")
+    logger.debug("inserted " + str(insert_response["nUpserted"]) + "  business")
+    logger.debug("updated " + str(insert_response["nModified"]) + "  business")
+
+
+def clean(business):
+    if "price" in business:
+        business['price'] = len(business['price']) * 1.25  # normalize to 1-5
+    else:
+        business['price'] = None
+
+    if "categories" in business and isinstance(business["categories"], list):
+        clean_category = []
+        for category in business["categories"]:
+            clean_category.append(category["title"])
+        business["categories"] = clean_category
 
 
 def get_reviews():
@@ -53,8 +69,7 @@ def get_reviews():
         'authorization': "Bearer " + token
     }
 
-    yelp_reviews.delete_many({})
-    for business in yelp.find():
+    for business in yelp_data.find():
         response = requests.get(review_url.format(business['id']), headers=headers).json()
         reviews = response['reviews']
 
@@ -63,26 +78,19 @@ def get_reviews():
             review['x_create_date'] = now
 
         logger.debug("inserting " + str(len(reviews)) + "  reviews for " + business['id'])
-        yelp.insert(reviews)
-
-
-def setup_logger():
-    log = logging.getLogger('yelp')
-    log.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(formatter)
-    stream_handler.setLevel(logging.DEBUG)
-    log.addHandler(stream_handler)
-    return log
+        yelp_data.insert(reviews)
 
 
 def match_yelp_with_hygiene_data():
-    for y in yelp.find():
-        yelp_name = y["name"].lower()
-        print(yelp_name)
+    bulk_op = yelp_data.initialize_ordered_bulk_op()
+    matched = 0.0
+    total = 0.0
+    for y in yelp_data.find():
+        total += 1
+        update = False
+        yelp_name = clean_name(y["name"])
         closest = [0, None]
-        for h in hygiene.find(
+        for h in hygiene_data.find(
                 {"Geocode":
                      {"$near":
                           {"$geometry":
@@ -92,21 +100,52 @@ def match_yelp_with_hygiene_data():
                            }
                       }
                  }).limit(20):
-            ratio = difflib.SequenceMatcher(lambda x: x == " ", yelp_name, h["BusinessName"].lower()).ratio()
+            ratio = difflib.SequenceMatcher(lambda x: x == " ", yelp_name, clean_name(h["BusinessName"])).ratio()
             if ratio > closest[0]:
                 closest = [ratio, h]
-        print("MATCH: " + str(closest[0]) + " = " + closest[1]["BusinessName"])
+        if closest[0] > 0.8:
+            update = True
+        else:
+            hygiene_name = clean_name(closest[1]["BusinessName"])
+            if yelp_name in hygiene_name or hygiene_name in yelp_name:
+                update = True
+            elif closest[0] > 0.5:
+                print("MAYBE " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
+                # else:
+                #     print("NO " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
+        if update:
+            matched += 1
+            y["FHRSID"] = h['FHRSID']
+            bulk_op.find({"id": y["id"]}).upsert().update({"$set": y})
+    print("Matching rate: " + str(float(matched) / total))
+    bulk_op.execute()
 
 
-# def create_geo_index():
-#     geo_index = IndexModel([("coordinates", GEO2D)])
-#     DbConnection().get_restaurant_db().hygiene.create_indexes([geo_index])
+def clean_name(name):
+    name = name_clean_re.sub('', name.lower()).strip()
+    return " ".join([word for word in name.split() if word.lower() not in restaurant_stopwords])
+
+
+def create_geo_index():
+    geo_index = IndexModel([("coordinates", GEOSPHERE)])
+    yelp_data.create_indexes([geo_index])
 
 
 if __name__ == "__main__":
-    logger = setup_logger()
+    auth_url = "https://api.yelp.com/oauth2/token"
+    search_url = "https://api.yelp.com/v3/businesses/search"
+    review_url = "https://api.yelp.com/v3/businesses/{}/reviews"
 
-    # token = get_oauth_token()
-    # search("Southampton")
+    con = DbConnection()
+    db = con.get_restaurant_db()
+    yelp_data = con.get_yelp_collection(db)
+    yelp_review_data = db['yelp_review_data']
+    hygiene_data = con.get_hygiene_collection(db)
+
+    logger = setup_logger("yelp")
+
+    token = get_oauth_token()
+    search_by_location("Southampton")
+    create_geo_index()
     match_yelp_with_hygiene_data()
     # get_reviews()
