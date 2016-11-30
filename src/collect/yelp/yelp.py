@@ -13,7 +13,7 @@ def get_oauth_token():
     headers = {'content-type': "application/x-www-form-urlencoded"}
     response = requests.post(auth_url, data=payload, headers=headers)
     oauth_token = response.json()['access_token']
-    logger.debug("oauth_token: " + oauth_token)
+    yelp_logger.debug("oauth_token: " + oauth_token)
     return oauth_token
 
 
@@ -25,6 +25,8 @@ def search_by_location(location):
     page_size = 50  # maximum limit for api is 50
     current_offset = 0
 
+
+    yelp_logger.debug("loading data from yelp")
     bulk_op = yelp_data.initialize_ordered_bulk_op()
     now = datetime.datetime.now()
     while total > current_offset:
@@ -42,13 +44,14 @@ def search_by_location(location):
             bulk_op.find({"id": business["id"]}).upsert().update_one({"$set": business})
 
         current_offset += page_size
-        logger.debug("search return " + str(total) + " total business")
+        yelp_logger.debug("Progress {}/{}".format(current_offset, total))
 
+    yelp_logger.debug("executing bulk update")
     insert_response = bulk_op.execute()
 
-    logger.debug("search return " + str(total) + " total business")
-    logger.debug("inserted " + str(insert_response["nUpserted"]) + "  business")
-    logger.debug("updated " + str(insert_response["nModified"]) + "  business")
+    yelp_logger.debug("search return " + str(total) + " total business")
+    yelp_logger.debug("inserted " + str(insert_response["nUpserted"]) + "  business")
+    yelp_logger.debug("updated " + str(insert_response["nModified"]) + "  business")
 
 
 def clean(business):
@@ -77,7 +80,7 @@ def get_reviews():
         for review in reviews:
             review['x_create_date'] = now
 
-        logger.debug("inserting " + str(len(reviews)) + "  reviews for " + business['id'])
+        yelp_logger.debug("inserting " + str(len(reviews)) + "  reviews for " + business['id'])
         yelp_data.insert(reviews)
 
 
@@ -106,18 +109,20 @@ def match_yelp_with_hygiene_data():
         if closest[0] > 0.8:
             update = True
         else:
-            hygiene_name = clean_name(closest[1]["BusinessName"])
-            if yelp_name in hygiene_name or hygiene_name in yelp_name:
-                update = True
-            elif closest[0] > 0.5:
-                print("MAYBE " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
+            if closest[1] is not None:
+                hygiene_name = clean_name(closest[1]["BusinessName"])
+                if yelp_name in hygiene_name or hygiene_name in yelp_name:
+                    update = True
+                elif closest[0] > 0.5:
+                    yelp_logger.debug("MAYBE " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
                 # else:
                 #     print("NO " + yelp_name + " = " + hygiene_name + " - " + str(closest[0]))
         if update:
             matched += 1
             y["FHRSID"] = h['FHRSID']
             bulk_op.find({"id": y["id"]}).upsert().update({"$set": y})
-    print("Matching rate: " + str(float(matched) / total))
+    yelp_logger.info("Matching rate: " + str(float(matched) / total))
+    yelp_logger.debug("executing bulk update")
     bulk_op.execute()
 
 
@@ -131,6 +136,8 @@ def create_geo_index():
     yelp_data.create_indexes([geo_index])
 
 
+yelp_logger = setup_logger("yelp")
+
 if __name__ == "__main__":
     auth_url = "https://api.yelp.com/oauth2/token"
     search_url = "https://api.yelp.com/v3/businesses/search"
@@ -142,10 +149,8 @@ if __name__ == "__main__":
     yelp_review_data = db['yelp_review_data']
     hygiene_data = con.get_hygiene_collection(db)
 
-    logger = setup_logger("yelp")
-
-    token = get_oauth_token()
-    search_by_location("Southampton")
-    create_geo_index()
+    # token = get_oauth_token()
+    # search_by_location("Southampton")
+    # create_geo_index()
     match_yelp_with_hygiene_data()
     # get_reviews()
