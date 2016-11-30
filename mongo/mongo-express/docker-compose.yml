@@ -1,0 +1,13 @@
+version: '2'
+services:
+    mongo-express:
+        image: mongo-express
+        ports:
+            - "8082:8081"
+        environment:
+            - ME_CONFIG_MONGODB_SERVER=svm-lw4u16-comp6235-group-6.ecs.soton.ac.uk
+            - ME_CONFIG_MONGODB_PORT=27018
+            - ME_CONFIG_MONGODB_AUTH_USERNAME=user
+            - ME_CONFIG_MONGODB_AUTH_PASSWORD=banana4
+            - ME_CONFIG_MONGODB_AUTH_DATABASE=restaurants
+            - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
