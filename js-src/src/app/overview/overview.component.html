@@ -1,0 +1,13 @@
+<div>
+    <scatter></scatter>
+    <button (click)="getAuthorityData()">click Me</button>
+     <li *ngFor="let restaurant of authRatingsData">
+         <div>
+             <ul>
+                 <li><span>Authority : {{restaurant?.hygiene.LocalAuthorityName}}</span></li>
+                 <li><span> Hygine Rating : {{restaurant?.hygiene.RatingValue}}</span></li>
+                 <li><span> Google Rating : {{restaurant?.google?.rating}}</span></li>
+             </ul>
+         </div>
+     </li>
+</div>
