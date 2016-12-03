@@ -5,6 +5,7 @@ class DbConnection:
     # host = "localhost"
     # port = 27017
     # auth = False
+    # db="resturant_data"
     host = "svm-lw4u16-comp6235-group-6.ecs.soton.ac.uk"
     port = 27018
     auth = True
@@ -23,7 +24,7 @@ class DbConnection:
     def get_restaurant_db(self):
         db = self.client[self.db]
         if self.auth:
-            db.authenticate('user', 'banana4');
+            db.authenticate('user', 'banana4')
         return db
 
     def get_yelp_collection(self, db=None):

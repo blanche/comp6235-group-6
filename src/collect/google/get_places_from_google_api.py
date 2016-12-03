@@ -125,20 +125,16 @@ def add_data_to_google_not_found(db, data):
         db.google_reviews_not_found.update(key, data, upsert=True)
 
 
-def get_google_places_for_current_of_higene_data_establishments():
-    # DB
-    not_found_list = []
-    found_list = []
-    db = DbConnection().get_restaurant_db()
-    establishments = [est for est in db.hygiene_data.find()]
-    establishments = establishments
-    for e in establishments:
-        time.sleep(0.75) # sleep to stop api cutting out for requests per second
-        print(establishments.index(e))
+
+
+
+def get_google_places_for_current_of_higene_data_establishments(city="Southampton"):
+
+    def get_establishment_data(e):
         google_find_data = get_place_by_name_and_address(e)
         if len(google_find_data) != 0:
             place = get_place_details_if_similar(google_find_data, e)
-            if(place):
+            if (place):
                 place["FHRSID"] = e["FHRSID"]
                 found_list.append(place)
             else:
@@ -147,6 +143,34 @@ def get_google_places_for_current_of_higene_data_establishments():
             e["Reason"] = "Not Results returned In Google Search api"
             not_found_list.append(e)
 
+
+    not_found_list = []
+    found_list = []
+    db = DbConnection().get_restaurant_db()
+    establishments = [est for est in db.hygiene_data.find({"LocalAuthorityName":city})]
+    count = 0
+    for e in establishments:
+        retry = 0
+        time.sleep(0.5) # sleep to stop api cutting out for requests per second
+        print(establishments.index(e))
+        try:
+            get_establishment_data(e)
+        except Exception as ex:
+            time.sleep(5)
+            if retry<10:
+                get_establishment_data(e)
+                retry+=1
+            else:
+                return ex
+
+        count += 1
+        if count==100:
+            print("ADDING :" + str(count))
+            add_data_to_google_found(db, found_list)
+            add_data_to_google_not_found(db, not_found_list)
+            found_list = []
+            not_found_list =[]
+            count=0
     add_data_to_google_found(db, found_list)
     add_data_to_google_not_found(db, not_found_list)
 
@@ -155,3 +179,128 @@ if __name__ == "__main__":
     get_google_places_for_current_of_higene_data_establishments()
     db = DbConnection().get_restaurant_db()
     [print(x["BusinessName"], x["Reason"], x["GoogleSearchUrl"]) for x in db.google_reviews_not_found.find()]
+
+#Local Authorities
+# "Southampton",
+# "Corby",
+# "Hinckley and Bosworth",
+# "Rossendale",
+# "Wiltshire",
+# "Guildford",
+# "Darlington",
+# "Barnsley",
+# "North Lincolnshire",
+# "Hart",
+# "Shropshire",
+# "Chelmsford",
+# "Horsham",
+# "Islington",
+# "Newport",
+# "Craven",
+# "Dartford",
+# "Mid Devon",
+# "Ipswich",
+# "Tameside",
+# "Epsom and Ewell",
+# "Worthing",
+# "Hackney",
+# "Croydon",
+# "Runnymede",
+# "Rotherham",
+# "Gloucester City",
+# "Selby",
+# "Stevenage",
+# "York",
+# "West Devon",
+# "West Oxfordshire",
+# "Trafford",
+# "Shetland Islands",
+# "North Somerset",
+# "Fenland",
+# "North Dorset",
+# "Swansea",
+# "Rochford",
+# "Bridgend",
+# "Tandridge",
+# "Solihull",
+# "Liverpool",
+# "Hertsmere",
+# "Lichfield",
+# "Stratford-on-Avon",
+# "Fife",
+# "Bolton",
+# "Allerdale",
+# "Test Valley",
+# "Tonbridge and Malling",
+# "South Staffordshire",
+# "Ashford",
+# "North Devon",
+# "Angus",
+# "Carmarthenshire",
+# "South Oxfordshire",
+# "South Ayrshire",
+# "East Renfrewshire",
+# "Breckland",
+# "Anglesey",
+# "St Albans City",
+# "South Cambridgeshire",
+# "Lincoln City",
+# "Nuneaton and Bedworth",
+# "Rutland",
+# "North Norfolk",
+# "Cardiff",
+# "Warwick",
+# "Wyre",
+# "Perth and Kinross",
+# "Blackpool",
+# "Waveney",
+# "Hillingdon",
+# "Castle Point",
+# "West Berkshire",
+# "Ceredigion",
+# "Forest Heath",
+# "Blaby",
+# "Maldon",
+# "Wandsworth",
+# "Moray",
+# "East Cambridgeshire",
+# "Norwich City",
+# "Barrow-in-Furness",
+# "East Riding of Yorkshire",
+# "South Northamptonshire",
+# "East Hertfordshire",
+# "Gateshead",
+# "Merton",
+# "Lewes",
+# "Melton",
+# "Broadland",
+# "Preston",
+# "Bury",
+# "Bolsover",
+# "Hounslow",
+# "Reading",
+# "Windsor and Maidenhead",
+# "West Lothian",
+# "Bradford",
+# "Wychavon",
+# "Carlisle City",
+# "Christchurch",
+# "Greenwich",
+# "City of London Corporation",
+# "Boston",
+# "Rhondda Cynon Taf",
+# "Wycombe",
+# "Cherwell",
+# "Oldham",
+# "King's Lynn and West Norfolk",
+# "Southwark",
+# "Aylesbury Vale",
+# "South Kesteven",
+# "Midlothian",
+# "Stoke-On-Trent",
+# "Cannock Chase",
+# "North East Lincolnshire",
+# "Bromley",
+# "Conwy",
+# "Sefton"
+# "Stockton On Tees",
