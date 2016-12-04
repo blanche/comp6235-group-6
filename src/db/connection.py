@@ -2,13 +2,15 @@ from pymongo import MongoClient
 
 
 class DbConnection:
-    # host = "localhost"
-    # port = 27017
-    # auth = False
-    host = "svm-lw4u16-comp6235-group-6.ecs.soton.ac.uk"
-    port = 27018
-    auth = True
-    db = "restaurants"
+    host = "localhost"
+    port = 27017
+    auth = False
+    # host = "svm-lw4u16-comp6235-group-6.ecs.soton.ac.uk"
+    # port = 27018
+    # auth = True
+    # db = "restaurants"
+    db = "yelp4"
+    # db = "ham-nor"
     client = None
 
     def __init__(self):
