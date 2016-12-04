@@ -57,7 +57,8 @@ def update_hygiene_data_db(data):
     """
     hygiene_logger.debug("start inserting {} items".format(len(data)))
     hygiene_data = DbConnection().get_hygiene_collection()
-    bulk_op = hygiene_data.initialize_ordered_bulk_op()
+    # hygiene_data.insert_many(data)
+    bulk_op = hygiene_data.initialize_unordered_bulk_op()
     for establishment in data:
         bulk_op.find({"FHRSID": establishment["FHRSID"]}).upsert().update({"$set": establishment})
 
