@@ -1,0 +1,33 @@
+Meeting with Elena
+
+what our story should be:
+	1) analysis of public opinion (google vs yelp vs justeat)
+	2) analysis of public vs authorities
+
+important: we have to explain results
+	why does it (not) correlate
+		less data?
+		geographical location?
+		more fast food?
+		specific categories?
+		reviews worse in this area?
+		public health is taken more serious?
+		chains rated consistently over councils?
+		is price a factor?
+		how are the three sub ratings (management, x, x) correlate 
+
+sentiment analysis not feasible for our use case
+	better try topic modeling on the text
+	how are high rated/low rated rated restaurants mentioned
+
+presentation:
+	1) start with story
+		story we found, it is interesting because this and this
+	2) go through how we did it
+		what where the problems (lessens learned)
+		in a technical perspective
+	3) highlight findings again
+
+	audience should take away:
+		what are the findings
+		how did we do it
