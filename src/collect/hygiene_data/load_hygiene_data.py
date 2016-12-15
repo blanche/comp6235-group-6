@@ -55,9 +55,10 @@ def update_hygiene_data_db(data):
     adds hygiene data to specified mongodb database
     :param data: dict of documents to add
     """
-    hygiene_logger.debug("start inserting data")
+    hygiene_logger.debug("start inserting {} items".format(len(data)))
     hygiene_data = DbConnection().get_hygiene_collection()
-    bulk_op = hygiene_data.initialize_ordered_bulk_op()
+    # hygiene_data.insert_many(data)
+    bulk_op = hygiene_data.initialize_unordered_bulk_op()
     for establishment in data:
         bulk_op.find({"FHRSID": establishment["FHRSID"]}).upsert().update({"$set": establishment})
 
@@ -97,16 +98,22 @@ def clean_and_convert(data):
 def load_all():
     total = len(get_hygiene_data_source())
     progress = 1
+    hygiene_loaded = DbConnection().get_restaurant_db().hygiene_loaded
     for key in get_hygiene_data_source().keys():
-        hygiene_data = load_data_from_xml(key)
-        update_hygiene_data_db(clean_and_convert(hygiene_data))
+        search_key = {"name": key}
+        if hygiene_loaded.count(search_key) == 0:
+            hygiene_data = load_data_from_xml(key)
+            update_hygiene_data_db(clean_and_convert(hygiene_data))
+            hygiene_loaded.insert(search_key)
+        else:
+            hygiene_logger.debug("skipping {} because it was already loaded".format(key))
         hygiene_logger.info("Progress: {}/{}".format(progress, total))
         progress += 1
 
 
 hygiene_logger = setup_logger("hygiene")
 if __name__ == "__main__":
-    # load_all()
-    hygiene_data = load_data_from_xml()
-    update_hygiene_data_db(clean_and_convert(hygiene_data))
+    load_all()
+    # hygiene_data = load_data_from_xml()
+    # update_hygiene_data_db(clean_and_convert(hygiene_data))
     create_geo_index()
