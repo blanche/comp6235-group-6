@@ -26,7 +26,7 @@ export class DataService {
      getDataForAuthority(authorityName:string): void {
         var query = this.dataUrl  + '?hygiene.LocalAuthorityName=' + authorityName;
         this._getDataForAuthority(query).subscribe(
-            (res =>
+            ((res : any) =>
          {
              let data = this.extractData(res);
              this.authoritesData.next(data)

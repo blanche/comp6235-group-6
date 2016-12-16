@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {DataService} from './data-services/data.service'
 import {OverviewComponent} from './overview/overview.component'
 import {HttpModule} from "@angular/http";
-import {GoogleChart} from './directives/angular2-google-chart.directive';
 import {ScatterChartComponent} from "./overview/overview.scatter.component";
 
 @NgModule({

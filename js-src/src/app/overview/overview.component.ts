@@ -8,8 +8,8 @@ import {DataService} from "../data-services/data.service";
 @Component({
     // moduleId: module.id,
     selector: 'overview',
-    templateUrl:'./overview.component.html',
-    styleUrls: ['./overview.component.css'],
+    templateUrl:'/src/app/overview/overview.component.html',
+    styleUrls: ['/src/app/overview/overview.component.css'],
 })
 
 export class OverviewComponent implements OnInit {
