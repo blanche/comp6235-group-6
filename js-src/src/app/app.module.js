@@ -14,7 +14,10 @@ var app_component_1 = require('./app.component');
 var data_service_1 = require('./data-services/data.service');
 var overview_component_1 = require('./overview/overview.component');
 var http_1 = require("@angular/http");
-var overview_scatter_component_1 = require("./overview/overview.scatter.component");
+var overview_scatter_component_1 = require("./council-specific/overview.scatter.component");
+var index_1 = require("ng2-auto-complete/dist/index");
+var council_component_1 = require("./council-specific/council.component");
+var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,12 +25,15 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [
                 platform_browser_1.BrowserModule,
-                http_1.HttpModule
+                http_1.HttpModule,
+                index_1.Ng2AutoCompleteModule,
+                ng_bootstrap_1.NgbModule
             ],
             declarations: [
                 app_component_1.AppComponent,
                 overview_component_1.OverviewComponent,
                 overview_scatter_component_1.ScatterChartComponent,
+                council_component_1.CouncilComponent,
             ],
             bootstrap: [app_component_1.AppComponent],
             providers: [data_service_1.DataService]

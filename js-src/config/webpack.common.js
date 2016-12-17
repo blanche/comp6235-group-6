@@ -3,17 +3,16 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
 
+
 module.exports = {
   entry: {
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts',
-    'app': './src/main.ts',
-    'bower_components' : './bower_components'
+    'app': './src/main.ts'
   },
 
   resolve: {
-    extensions: ['', '.js', '.ts'],
-    modulesDirectories: ["bower_components"]
+    extensions: ['', '.js', '.ts',]
   },
 
   module: {
@@ -50,10 +49,6 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: 'src/index.html'
-    }),
-
-    new webpack.ResolverPlugin(
-        new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
-    )
+    })
   ]
 };

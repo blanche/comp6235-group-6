@@ -9,7 +9,7 @@ import {GoogleChartComponent} from "../google-chart/google-chart";
    @Component({
        selector : 'scatter',
        template:  `
-        <h2> Scatter Chart</h2>
+        <h2>Distribution Gooogle To Hygine</h2>
         <div id="chartscatter" style="width: 900px; height: 500px;"></div>
        `
    })

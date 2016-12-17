@@ -9,26 +9,16 @@ import {DataService} from "../data-services/data.service";
     // moduleId: module.id,
     selector: 'overview',
     templateUrl:'/src/app/overview/overview.component.html',
-    styleUrls: ['/src/app/overview/overview.component.css'],
+    styleUrls: ['src/app/overview/overview.component.css'],
 })
 
 export class OverviewComponent implements OnInit {
 
     public authRatingsData : any;
 
-
-    constructor(private dataService: DataService) { 
-        dataService.newAuthoritesDataAnnounced$.subscribe(
-            newAuthoritiesData => this.authRatingsData=newAuthoritiesData
-        );
-    };
-
     ngOnInit(): void {
 
     }
 
-    getAuthorityData(): void{
-        this.dataService.getDataForAuthority("Southampton")
-    }
 
 }

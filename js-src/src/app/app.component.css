@@ -2,4 +2,10 @@ main {
     font-family: sans-serif;
     text-align: center;
     margin-top: 50px;
+    background: #ffffff;
+
+}
+
+body {
+    color: #333;
 }

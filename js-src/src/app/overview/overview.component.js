@@ -12,27 +12,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by ayoung on 21/11/16.
  */
 var core_1 = require('@angular/core');
-var data_service_1 = require("../data-services/data.service");
 var OverviewComponent = (function () {
-    function OverviewComponent(dataService) {
-        var _this = this;
-        this.dataService = dataService;
-        dataService.newAuthoritesDataAnnounced$.subscribe(function (newAuthoritiesData) { return _this.authRatingsData = newAuthoritiesData; });
+    function OverviewComponent() {
     }
-    ;
     OverviewComponent.prototype.ngOnInit = function () {
-    };
-    OverviewComponent.prototype.getAuthorityData = function () {
-        this.dataService.getDataForAuthority("Southampton");
     };
     OverviewComponent = __decorate([
         core_1.Component({
             // moduleId: module.id,
             selector: 'overview',
             templateUrl: '/src/app/overview/overview.component.html',
-            styleUrls: ['/src/app/overview/overview.component.css'],
+            styleUrls: ['src/app/overview/overview.component.css'],
         }), 
-        __metadata('design:paramtypes', [data_service_1.DataService])
+        __metadata('design:paramtypes', [])
     ], OverviewComponent);
     return OverviewComponent;
 }());

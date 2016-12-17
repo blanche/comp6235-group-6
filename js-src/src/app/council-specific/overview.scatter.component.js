@@ -68,7 +68,7 @@ var ScatterChartComponent = (function (_super) {
     ScatterChartComponent = __decorate([
         core_1.Component({
             selector: 'scatter',
-            template: "\n        <h2> Scatter Chart</h2>\n        <div id=\"chartscatter\" style=\"width: 900px; height: 500px;\"></div>\n       "
+            template: "\n        <h2>Distribution Gooogle To Hygine</h2>\n        <div id=\"chartscatter\" style=\"width: 900px; height: 500px;\"></div>\n       "
         }), 
         __metadata('design:paramtypes', [data_service_1.DataService])
     ], ScatterChartComponent);
