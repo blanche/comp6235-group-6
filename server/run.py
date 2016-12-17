@@ -27,7 +27,6 @@ class OverviewListAPI(Resource):
                     search_value = v.split("__")[1]
 
                 query[k] = {v.split("__")[0]:search_value}
-        tq = {'google.rating': {'$gte': 4.6}}
         cursor = db.overall.find(query)
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
         print("return results {}".format(len(json_docs)))
@@ -38,11 +37,20 @@ class OverViewAPI(Resource):
     def get(self, id):
         db.overall.find({"FHRSID":id})
 
+class CouncilNameListAPI(Resource):
+    def get(self):
+        query = {}
+        cursor = db.hygiene_data.distinct("LocalAuthorityName")
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return json_docs
+
 
 
 
 api.add_resource(OverviewListAPI, '/api/v1/overall', endpoint = 'overviews')
 api.add_resource(OverViewAPI, '/api/v1/overall/<int:id>', endpoint = 'overview')
+api.add_resource(CouncilNameListAPI, '/api/v1/councilnames/')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
