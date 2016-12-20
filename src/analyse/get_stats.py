@@ -4,39 +4,43 @@ import numpy
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-bycat = defaultdict(lambda: {"hygiene": [], "rating": []})
-bycat_both = defaultdict(list)
-bycat_price = defaultdict(list)
-bycouncil_both = defaultdict(list)
-byconcil_price = defaultdict(list)
-byprice = defaultdict(lambda: {"hygiene": [], "rating": []})
-byprice_both = defaultdict(list)
 
-for line in open("/home/lukas/out.json"):
-    j = json.loads(line)
-    if 'yelp' in j:
-        if 'categories' in j['yelp']:
-            for cat in j['yelp']['categories']:
-                bycat[cat]['rating'].append(j['yelp']['rating'])
-                if 'hygiene' in j and 'RatingValue' in j['hygiene'] and j['hygiene']['RatingValue'] is not None:
-                    bycat[cat]['hygiene'].append(j['hygiene']['RatingValue'])
-                    bycat_both[cat].append([j['yelp']['rating'], j['hygiene']['RatingValue']])
+def calc_stats(filename="/home/lukas/dump/out.json"):
+    bycat = defaultdict(lambda: {"hygiene": [], "rating": []})
+    bycat_both = defaultdict(list)
+    bycat_price = defaultdict(list)
+    bycouncil_both = defaultdict(list)
+    byconcil_price = defaultdict(list)
+    byprice = defaultdict(lambda: {"hygiene": [], "rating": []})
+    byprice_both = defaultdict(list)
 
-                if 'price' in j['yelp'] and j['yelp']['price'] is not None:
-                    bycat_price[cat].append(j['yelp']['price'] )
+    for line in open(filename):
+        j = json.loads(line)
+        if 'yelp' in j:
+            if 'categories' in j['yelp']:
+                for cat in j['yelp']['categories']:
+                    bycat[cat]['rating'].append(j['yelp']['rating'])
+                    if 'hygiene' in j and 'RatingValue' in j['hygiene'] and j['hygiene']['RatingValue'] is not None:
+                        bycat[cat]['hygiene'].append(j['hygiene']['RatingValue'])
+                        bycat_both[cat].append([j['yelp']['rating'], j['hygiene']['RatingValue']])
 
-        if 'hygiene' in j and 'LocalAuthorityName' in j['hygiene'] and j['hygiene']['RatingValue'] is not None:
-            bycouncil_both[j['hygiene']['LocalAuthorityName']].append(
-                [j['yelp']['rating'], j['hygiene']['RatingValue']])
-            if 'price' in j['yelp'] and j['yelp']['price'] is not None:
-                byconcil_price[j['hygiene']['LocalAuthorityName']].append(j['yelp']['price'])
-        if 'price' in j['yelp'] and j['yelp']['price'] is not None:
-            byprice[j['yelp']['price']]['rating'].append(j['yelp']['rating'])
+                    if 'price' in j['yelp'] and j['yelp']['price'] is not None:
+                        bycat_price[cat].append(j['yelp']['price'])
+
             if 'hygiene' in j and 'LocalAuthorityName' in j['hygiene'] and j['hygiene']['RatingValue'] is not None:
-                byprice[j['yelp']['price']]['rating'].append(j['hygiene']['RatingValue'])
-                byprice_both[j['yelp']['price']].append([j['yelp']['rating'], j['hygiene']['RatingValue']])
+                bycouncil_both[j['hygiene']['LocalAuthorityName']].append(
+                    [j['yelp']['rating'], j['hygiene']['RatingValue']])
+                if 'price' in j['yelp'] and j['yelp']['price'] is not None:
+                    byconcil_price[j['hygiene']['LocalAuthorityName']].append(j['yelp']['price'])
+            if 'price' in j['yelp'] and j['yelp']['price'] is not None:
+                byprice[j['yelp']['price']]['rating'].append(j['yelp']['rating'])
+                if 'hygiene' in j and 'LocalAuthorityName' in j['hygiene'] and j['hygiene']['RatingValue'] is not None:
+                    byprice[j['yelp']['price']]['rating'].append(j['hygiene']['RatingValue'])
+                    byprice_both[j['yelp']['price']].append([j['yelp']['rating'], j['hygiene']['RatingValue']])
 
+    return bycat, bycat_both, bycat_price, bycouncil_both, byconcil_price, byprice, byprice_both
 
+bycat, bycat_both, bycat_price, bycouncil_both, byconcil_price, byprice, byprice_both = calc_stats()
 
 for key, val in bycat.items():
     hygiene_avg = ""
@@ -52,6 +56,7 @@ for key, val in bycat.items():
         ratings_avg = sum(ratings) / float(len(ratings))
     if hygiene_avg != "" or ratings_avg != "":
         print("{}\t{}\t{}\t{}\t{}".format(key, hygiene_avg, len(hygiene), ratings_avg, len(ratings)))
+
 
 def calcomat(key, val):
     val = [x for x in val if x is not None]
@@ -86,7 +91,6 @@ for key, val in byconcil_price.items():
         avg = sum(val) / float(len(val))
         std = numpy.std(val, axis=0)
         print("{}\t{}\t{}\t{}".format(key, avg, std, len(val)))
-
 
 for key, val in bycat_price.items():
     if len(val) > 10:
