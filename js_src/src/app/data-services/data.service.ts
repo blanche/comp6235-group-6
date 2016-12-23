@@ -41,7 +41,6 @@ export class DataService {
     }
 
     private extractData(res:Response) {
-        console.log("HERE");
         let body = res.json();
         let properJsonBody:Array<any> = [];
         for (let item in body) {
