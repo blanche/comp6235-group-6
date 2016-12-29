@@ -1,0 +1,23 @@
+<h2 id="councilMainHeader">Council Specific</h2>
+
+<div class="form-group">
+    <label for="councilPicker">Council:</label>
+    <input id=councilPicker placeholder="Southampton" auto-complete [(ngModel)]="selectedCouncil" [source]="councilList" (valueChanged)="getAuthorityData()" />
+</div>
+
+<div class="col-sm-6">
+    <scatter></scatter>
+    <li *ngFor="let restaurant of authRatingsData">
+        <div>
+             <ul>
+                 <li><span>Authority : {{restaurant?.hygiene.LocalAuthorityName}}</span></li>
+                 <li><span> Hygine Rating : {{restaurant?.hygiene.RatingValue}}</span></li>
+                 <li><span> Google Rating : {{restaurant?.google?.rating}}</span></li>
+             </ul>
+        </div>
+    </li>
+</div>
+
+<div class="col-sm-6">
+    <price></price>
+</div>
