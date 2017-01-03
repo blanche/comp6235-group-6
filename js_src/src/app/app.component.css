@@ -9,3 +9,7 @@ main {
 body {
     color: #333;
 }
+
+div#selectionCouncil{
+  padding-bottom: 50px;
+}

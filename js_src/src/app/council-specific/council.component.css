@@ -1,3 +1,11 @@
 #councilMainHeader{
   margin-bottom: 20px;
 }
+
+ng2-auto-complete{
+  z-index: 999!important;
+}
+
+div#councilPickerContainer{
+  text-align: center;
+}

@@ -6,26 +6,28 @@ import {BehaviorSubject} from "rxjs/Rx";
 
 @Injectable()
 export class DataService {
-    private dataUrl = 'http://localhost:5000/api/v1/overall';  // URL to web API
-    
+    private dataUrl = 'http://localhost:5000/api/v1/';  // URL to web API
+
     constructor(private http:Http) {
     }
 
-    // Observable Data
+    // Observable Data authoritesData
     private authoritesData = new BehaviorSubject(Array());
-    
-
-    // Observable Data
     public newAuthoritesDataAnnounced$ = this.authoritesData.asObservable();
-  
+
+
+    //Observable Data CouncilStats
+    private authoritesStatsData = new BehaviorSubject(Array());
+    public newAuthoritesStatsDataAnnounced$ = this.authoritesStatsData.asObservable();
+
 
     announceDataSourceAvailible(data: any) {
         this.authoritesData = data;
     }
 
-     getDataForAuthority(authorityName:string): void {
-        var query = this.dataUrl  + '?hygiene.LocalAuthorityName=' + authorityName;
-        this._getDataForAuthority(query).subscribe(
+   public getDataForAuthority(authorityName:string): void {
+        var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
+        this._getData(query).subscribe(
             ((res : any) =>
          {
              let data = this.extractData(res);
@@ -35,8 +37,20 @@ export class DataService {
         );
     }
 
+  public getAuthorityStatsData(authorityName:string):void{
+     var query = this.dataUrl + "councilstats/" + authorityName;
+    this._getData(query).subscribe(
+            ((res : any) =>
+         {
+             let data = this.extractData(res);
+             this.authoritesStatsData.next(data)
+         }).bind(this)
 
-    private _getDataForAuthority(query:string): Observable<any> {
+        );
+  }
+
+
+    private _getData(query:string): Observable<any> {
         return this.http.get(query)
     }
 

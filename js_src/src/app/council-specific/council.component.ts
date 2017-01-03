@@ -16,16 +16,43 @@ import {COUNCILNAMES} from "./councilNames.Array";
 
 export class CouncilComponent implements OnInit {
 
-    public authRatingsData : any;
+    public authStatsData : any;
     public selectedCouncil : string;
     public councilList : Array<string>;
 
 
+    public setDefaultStats(): void{
+        this.authStatsData = {
+            hygieneMean:0,
+            hygieneStdev:0,
+            hygieneMode:0,
+            googleMean:0,
+            googleStdev:0,
+            googleMode:0,
+            yelpMean:0,
+            yelpStdev:0,
+            yelpMode:0
+        };
+    }
+
+
+
     constructor(private dataService: DataService) {
-        dataService.newAuthoritesDataAnnounced$.subscribe(
-            newAuthoritiesData => this.authRatingsData=newAuthoritiesData
+        this.setDefaultStats();
+        dataService.newAuthoritesStatsDataAnnounced$.subscribe(
+          newAuthoritiesStatsData => this.updateStatsData(newAuthoritiesStatsData)
+
+
         );
     };
+
+    public updateStatsData(data:any):void{
+      if (data.length != 0) {
+          this.authStatsData = data[0]
+      }
+    }
+
+
 
     ngOnInit(): void {
         this.councilList = COUNCILNAMES;
@@ -34,7 +61,7 @@ export class CouncilComponent implements OnInit {
 
     getAuthorityData(): void{
         if(this.councilList.indexOf(this.selectedCouncil) > 0) {
-          this.dataService.getDataForAuthority(this.selectedCouncil)
+          this.dataService.getAuthorityStatsData(this.selectedCouncil)
         }
     }
 
