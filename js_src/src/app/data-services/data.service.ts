@@ -21,9 +21,13 @@ export class DataService {
     public newAuthoritesStatsDataAnnounced$ = this.authoritesStatsData.asObservable();
 
 
-    announceDataSourceAvailible(data: any) {
-        this.authoritesData = data;
-    }
+    //Observable Data CouncilWords
+    private councilWordData = new BehaviorSubject(Array());
+    public newCouncilWordDataAnnounced$ = this.councilWordData.asObservable();
+
+
+
+
 
    public getDataForAuthority(authorityName:string): void {
         var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
@@ -47,6 +51,18 @@ export class DataService {
          }).bind(this)
 
         );
+  }
+
+
+   public getCouncilWordData(authorityName:string): void {
+      var query = this.dataUrl  + 'councilwords/' + authorityName;
+      this._getData(query).subscribe(
+          ((res : any) =>
+       {
+           let data = this.extractData(res);
+           this.councilWordData.next(data)
+       }).bind(this)
+      );
   }
 
 
