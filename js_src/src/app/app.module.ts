@@ -9,7 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {CouncilComponent} from "./council-specific/council.component";
 import {ScatterChartComponent} from "./council-specific/council.scatter.component";
 import {CouncilPriceScatterComponent} from "./council-specific/council.scatterprice.component";
-
+import {WordCloudComponent} from "./council-specific/word-cloud/council.wordcloud.component";
 
 @NgModule({
     imports: [
@@ -23,7 +23,8 @@ import {CouncilPriceScatterComponent} from "./council-specific/council.scatterpr
         OverviewComponent,
         CouncilComponent,
         ScatterChartComponent,
-        CouncilPriceScatterComponent
+        CouncilPriceScatterComponent,
+        WordCloudComponent,
     ],
     bootstrap: [AppComponent],
     entryComponents: [AppComponent],

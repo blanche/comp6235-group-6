@@ -44,9 +44,14 @@ class CouncilNameListAPI(Resource):
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
         return json_docs
 
+class CouncilStatsAPI(Resource):
+    def get(self, council_name):
+        query = {"LocalAuthorityName":council_name}
+        cursor = db.localAuthStats.find(query)
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return json_docs
 
-
-
+api.add_resource(CouncilStatsAPI, '/api/v1/councilstats/<string:council_name>')
 api.add_resource(OverviewListAPI, '/api/v1/overall', endpoint = 'overviews')
 api.add_resource(OverViewAPI, '/api/v1/overall/<int:id>', endpoint = 'overview')
 api.add_resource(CouncilNameListAPI, '/api/v1/councilnames/')
