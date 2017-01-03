@@ -1,23 +1,40 @@
-<h2 id="councilMainHeader">Council Specific</h2>
-
-<div class="form-group">
-    <label for="councilPicker">Council:</label>
-    <input id=councilPicker placeholder="Southampton" auto-complete [(ngModel)]="selectedCouncil" [source]="councilList" (valueChanged)="getAuthorityData()" />
+ <div class="center">
+  <div id="councilPickerContainer">
+      <input id=councilPicker class="input-lg" placeholder="Southampton" auto-complete [(ngModel)]="selectedCouncil" [source]="councilList" (valueChanged)="getAuthorityData()" />
+  </div>
 </div>
 
-<div class="col-sm-6">
-    <scatter></scatter>
-    <li *ngFor="let restaurant of authRatingsData">
-        <div>
-             <ul>
-                 <li><span>Authority : {{restaurant?.hygiene.LocalAuthorityName}}</span></li>
-                 <li><span> Hygine Rating : {{restaurant?.hygiene.RatingValue}}</span></li>
-                 <li><span> Google Rating : {{restaurant?.google?.rating}}</span></li>
-             </ul>
-        </div>
-    </li>
-</div>
 
-<div class="col-sm-6">
-    <price></price>
-</div>
+
+
+
+<div class="row process-content">
+   		<div class="left-side">
+   			<div class="item" data-item="">
+   				<h5>Hygiene Google Correlation</h5>
+   				<p>CHART ------------------------------------------------------------------------------------------------------------------------------------------------------------- CHART</p>
+   			</div>
+   			<div class="item" data-item="1">
+	   			<h5>Hygiene Yelp Correlation</h5>
+	   			<p>CHART ------------------------------------------------------------------------------------------------------------------------------------------------------------- CHART</p>
+   			</div>
+   		</div> <!-- /left-side -->
+   		<div class="right-side">
+   			<div class="item" data-item="a">
+   				<h5>Local Authority Stats:</h5>
+				<p align="left">Hygiene Mean: {{authStatsData.hygieneMean}}</p>
+				<p align="left">Hygiene Std: {{authStatsData.hygieneStdev}}</p>
+				<p align="left">Hygiene Mode: {{authStatsData.hygieneMode}}</p>
+
+   				<p align="left">Google Mean: {{authStatsData.googleMean}} </p>
+				<p align="left">Google Std: {{authStatsData.googleStdev}} </p>
+				<p align="left">Google Mode: {{authStatsData.googleMode}} </p>
+
+				<p align="left">Yelp Mean: {{authStatsData.yelpMean}} </p>
+				<p align="left">Yelp Std: {{authStatsData.yelpStdev}} </p>
+				<p align="left">Yelp Mode: {{authStatsData.yelpMode}} </p>
+   			</div>
+   		</div> <!-- /right-side -->
+   		<div class="image-part"></div>
+</div> <!-- /process-content -->
+

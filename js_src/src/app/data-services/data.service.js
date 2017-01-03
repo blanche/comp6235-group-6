@@ -27,7 +27,7 @@ var DataService = (function () {
     DataService.prototype.getDataForAuthority = function (authorityName) {
         var _this = this;
         var query = this.dataUrl + '?hygiene.LocalAuthorityName=' + authorityName;
-        this._getDataForAuthority(query).subscribe((function (res) {
+        this._getData(query).subscribe((function (res) {
             var data = _this.extractData(res);
             _this.authoritesData.next(data);
         }).bind(this));
