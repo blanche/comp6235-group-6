@@ -42,5 +42,10 @@ class DbConnection:
             db = self.get_restaurant_db()
         return db.overall
 
+    def get_resturants_stats_collection_db(self, db=None):
+        if db is None:
+            db = self.get_restaurant_db()
+        return db.localAuthStats
+
     def __del__(self):
         self.client.close()

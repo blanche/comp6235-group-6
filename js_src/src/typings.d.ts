@@ -35,3 +35,7 @@ export namespace d3 {
   export * from 'd3-zoom';
 
 }
+
+export namespace wordcloudGraph{
+  export * from 'wordcloud';
+}
