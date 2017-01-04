@@ -1,9 +1,6 @@
 /**
  * Created by ayoung on 03/01/17.
  */
-/**
- * Created by ayoung on 01/12/16.
- */
 
 import {Component, Input, OnChanges, SimpleChange} from '@angular/core';
 import {GoogleChartComponent} from "../../google-chart/google-chart";
@@ -14,10 +11,7 @@ declare var googleLoaded:any;
 
    @Component({
        selector : 'pdfcouncil',
-       template:  `
-        <h2>Distribution</h2>
-        <div id="pdfcouncil" style="width: 900px; height: 500px;"></div>
-       `
+       template:  `<div id="pdfcouncil" style="width: 400px; height: 300px;"></div>`
    })
 
 
@@ -54,8 +48,6 @@ export class PdfChartComponent extends GoogleChartComponent{
         if(rating!=null){hygieneCount = pdfData[0].hygiene[rating] + hygieneCount}
       }
 
-
-
       for(let i=1; i<=50; i++){
           let key = i/10;
           let googleData = pdfData[0].google[key];
@@ -85,12 +77,13 @@ export class PdfChartComponent extends GoogleChartComponent{
             chartData = this.createData(pdfData);
         }else{return}
         this.options = {
-            title: 'Distribution of ratings',
+			colors: ['#4285F4','#D9252E','#1CBCA9'],
+			width: 400,
+            height: 300,
+			chartArea: {width: "90%", height: "80%"},
             curveType: 'function',
             interpolateNulls: true,
             legend: { position: 'bottom' },
-            width: 400,
-            height: 400,
             vAxes: {
               0: {title: 'Percentage'},
               1: {title: 'Rating'}
