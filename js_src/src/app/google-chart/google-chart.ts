@@ -30,12 +30,18 @@ export class GoogleChartComponent implements OnInit {
     drawGraph(){
         console.log("DrawGraph base class!!!! ");
     }
-    
+
 
     createScatterPlot(element:any):any {
         console.log(google);
         if("visualization" in google) {
             return new google.visualization.ScatterChart(element);
+        }
+    }
+
+    createLinePlot(element:any):any {
+      if("visualization" in google) {
+            return new google.visualization.LineChart(element);
         }
     }
 }
