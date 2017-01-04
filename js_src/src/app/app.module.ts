@@ -10,6 +10,7 @@ import {CouncilComponent} from "./council-specific/council.component";
 import {ScatterChartComponent} from "./council-specific/council.scatter.component";
 import {CouncilPriceScatterComponent} from "./council-specific/council.scatterprice.component";
 import {WordCloudComponent} from "./council-specific/word-cloud/council.wordcloud.component";
+import {PdfChartComponent} from "./council-specific/council-pdf/council.pdf.council";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {WordCloudComponent} from "./council-specific/word-cloud/council.wordclou
         ScatterChartComponent,
         CouncilPriceScatterComponent,
         WordCloudComponent,
+        PdfChartComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [AppComponent],

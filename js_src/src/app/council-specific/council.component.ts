@@ -61,8 +61,9 @@ export class CouncilComponent implements OnInit {
 
     getAuthorityData(): void{
         if(this.councilList.indexOf(this.selectedCouncil) > 0) {
-          this.dataService.getAuthorityStatsData(this.selectedCouncil)
-          this.dataService.getCouncilWordData(this.selectedCouncil)
+          this.dataService.getAuthorityStatsData(this.selectedCouncil);
+          this.dataService.getCouncilWordData(this.selectedCouncil);
+          this.dataService.getCouncilPdfData(this.selectedCouncil)
         }
     }
 

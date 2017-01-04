@@ -25,7 +25,9 @@ export class DataService {
     private councilWordData = new BehaviorSubject(Array());
     public newCouncilWordDataAnnounced$ = this.councilWordData.asObservable();
 
-
+    //Observable PDF Council
+    private councilPdfData= new BehaviorSubject(Array());
+    public newCouncilPdfDataAnnounced$ = this.councilPdfData.asObservable();
 
 
 
@@ -54,6 +56,19 @@ export class DataService {
   }
 
 
+  public getCouncilPdfData(authorityName:string):void{
+     var query = this.dataUrl + "councilPdf/" + authorityName;
+     this._getData(query).subscribe(
+            ((res : any) =>
+         {
+             let data = this.extractData(res);
+             this.councilPdfData.next(data)
+         }).bind(this)
+
+        );
+  }
+
+
    public getCouncilWordData(authorityName:string): void {
       var query = this.dataUrl  + 'councilwords/' + authorityName;
       this._getData(query).subscribe(
@@ -73,8 +88,12 @@ export class DataService {
     private extractData(res:Response) {
         let body = res.json();
         let properJsonBody:Array<any> = [];
-        for (let item in body) {
-            properJsonBody.push(JSON.parse(body[item]));
+        if(typeof(body)=="object"){
+          for (let item in body) {
+              properJsonBody.push(JSON.parse(body[item]));
+          }
+        }else{
+           properJsonBody.push(JSON.parse(body));
         }
         return properJsonBody
     }

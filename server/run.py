@@ -4,6 +4,8 @@ from src.db.connection import DbConnection
 from bson import json_util
 import json
 
+from collections import Counter
+
 app = Flask(__name__)
 api = Api(app)
 db = DbConnection().get_restaurant_db()
@@ -56,8 +58,31 @@ class CouncilWordReviewAPI(Resource):
         query = {"LocalAuthorityName": council_name}
         cursor = db.localAuthReviews.find(query)
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
-        return json_docs
+        return  json_docs
 
+class PdfCalculationAPI(Resource):
+
+    def get(self, council_name):
+        google, yelp, hygiene = [],[],[]
+        query = {"hygiene.LocalAuthorityName":council_name}
+        returnValues = {"hygiene.RatingValue":1, "google.rating":1, "yelp.rating":1}
+        cursor = db.overall.find(query, returnValues)
+        for doc in cursor:
+            if "google" in doc:
+                rating = doc["google"]["rating"]
+                if rating != "NONE": google.append(rating)
+            if "yelp" in doc:
+                yelp.append(doc["yelp"]["rating"])
+            if "hygiene" in doc:
+                hygiene.append(doc["hygiene"]["RatingValue"])
+
+        google_count = dict(Counter(google))
+        yelp_count = dict(Counter(yelp))
+        hygiene_count = dict(Counter(hygiene))
+        json_dumps = json.dumps({"google":google_count, "yelp":yelp_count, "hygiene":hygiene_count}, default=json_util.default)
+        return json_dumps
+
+api.add_resource(PdfCalculationAPI, '/api/v1/councilPdf/<string:council_name>')
 api.add_resource(CouncilWordReviewAPI, '/api/v1/councilwords/<string:council_name>')
 api.add_resource(CouncilStatsAPI, '/api/v1/councilstats/<string:council_name>')
 api.add_resource(OverviewListAPI, '/api/v1/overall', endpoint = 'overviews')
