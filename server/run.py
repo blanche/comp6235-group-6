@@ -81,7 +81,15 @@ class PdfCalculationAPI(Resource):
         hygiene_count = dict(Counter(hygiene))
         json_dumps = json.dumps({"google":google_count, "yelp":yelp_count, "hygiene":hygiene_count}, default=json_util.default)
         return json_dumps
-
+		
+class CouncilCategorystatsAPI(Resource):
+    def get(self, council_name):
+        query = {"LocalAuthorityName":council_name}
+        cursor = db.localAuthCategory.find(query)
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return json_docs
+		
+api.add_resource(CouncilCategorystatsAPI, '/api/v1/councilcategorystats/<string:council_name>')
 api.add_resource(PdfCalculationAPI, '/api/v1/councilPdf/<string:council_name>')
 api.add_resource(CouncilWordReviewAPI, '/api/v1/councilwords/<string:council_name>')
 api.add_resource(CouncilStatsAPI, '/api/v1/councilstats/<string:council_name>')

@@ -74,9 +74,9 @@ export class WordCloudComponent implements OnInit {
     var d3 = this.d3;
     var fill = d3.scaleOrdinal(this.d3.schemeCategory10);
     var layout = this.cloundLib()
-      .size([500, 500])
+      .size([450, 350])
       .words(wordList)
-      .padding(5)
+      .padding(1)
       .rotate(function () {
         return ~~(Math.random() * 2) * 90;
       })

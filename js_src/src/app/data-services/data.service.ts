@@ -11,15 +11,13 @@ export class DataService {
     constructor(private http:Http) {
     }
 
-    // Observable Data authoritesData
+    // Observable Data AuthoritesData
     private authoritesData = new BehaviorSubject(Array());
     public newAuthoritesDataAnnounced$ = this.authoritesData.asObservable();
-
 
     //Observable Data CouncilStats
     private authoritesStatsData = new BehaviorSubject(Array());
     public newAuthoritesStatsDataAnnounced$ = this.authoritesStatsData.asObservable();
-
 
     //Observable Data CouncilWords
     private councilWordData = new BehaviorSubject(Array());
@@ -28,59 +26,70 @@ export class DataService {
     //Observable PDF Council
     private councilPdfData= new BehaviorSubject(Array());
     public newCouncilPdfDataAnnounced$ = this.councilPdfData.asObservable();
+	
+	//Observable Data CouncilCategoryStats
+    private authoritiesCategoryData = new BehaviorSubject(Array());
+    public newAuthoritiesCategoryData$ = this.authoritiesCategoryData.asObservable();
+
+	public getDataForAuthority(authorityName:string): void {
+		var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
+		this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.authoritesData.next(data)
+		 }).bind(this)
+
+		);
+	}
+
+	public getAuthorityStatsData(authorityName:string):void{
+	 var query = this.dataUrl + "councilstats/" + authorityName;
+	this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.authoritesStatsData.next(data)
+		 }).bind(this)
+		);
+	}
 
 
-
-   public getDataForAuthority(authorityName:string): void {
-        var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
-        this._getData(query).subscribe(
-            ((res : any) =>
-         {
-             let data = this.extractData(res);
-             this.authoritesData.next(data)
-         }).bind(this)
-
-        );
-    }
-
-  public getAuthorityStatsData(authorityName:string):void{
-     var query = this.dataUrl + "councilstats/" + authorityName;
-    this._getData(query).subscribe(
-            ((res : any) =>
-         {
-             let data = this.extractData(res);
-             this.authoritesStatsData.next(data)
-         }).bind(this)
-
-        );
-  }
+	public getCouncilPdfData(authorityName:string):void{
+	 var query = this.dataUrl + "councilPdf/" + authorityName;
+	 this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.councilPdfData.next(data)
+		 }).bind(this)
+		);
+	}
 
 
-  public getCouncilPdfData(authorityName:string):void{
-     var query = this.dataUrl + "councilPdf/" + authorityName;
-     this._getData(query).subscribe(
-            ((res : any) =>
-         {
-             let data = this.extractData(res);
-             this.councilPdfData.next(data)
-         }).bind(this)
+	public getCouncilWordData(authorityName:string): void {
+	  var query = this.dataUrl  + 'councilwords/' + authorityName;
+	  this._getData(query).subscribe(
+		  ((res : any) =>
+	   {
+		   let data = this.extractData(res);
+		   this.councilWordData.next(data)
+	   }).bind(this)
+	  );
+	}
 
-        );
-  }
-
-
-   public getCouncilWordData(authorityName:string): void {
-      var query = this.dataUrl  + 'councilwords/' + authorityName;
-      this._getData(query).subscribe(
-          ((res : any) =>
-       {
-           let data = this.extractData(res);
-           this.councilWordData.next(data)
-       }).bind(this)
-      );
-  }
-
-
+	public getAuthorityCategoryData(authorityName:string):void{
+	 var query = this.dataUrl + "councilcategorystats/" + authorityName;
+	this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.authoritiesCategoryData.next(data)
+		 }).bind(this)
+		);
+	}
+  
+  
     private _getData(query:string): Observable<any> {
         return this.http.get(query)
     }

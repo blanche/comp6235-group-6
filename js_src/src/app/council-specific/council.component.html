@@ -9,40 +9,61 @@
 
 
 <div class="row process-content">
-   		<div class="left-side">
-   			<div class="item" data-item="">
-   				<h5>Ratings Distribution</h5>
-          <pdfcouncil></pdfcouncil>
-   			</div>
-   			<div class="item" data-item="1">
-	   			<h5>Hygiene Yelp Correlation</h5>
-	   			<p>CHART ------------------------------------------------------------------------------------------------------------------------------------------------------------- CHART</p>
-   			</div>
-   		</div> <!-- /left-side -->
-   		<div class="right-side">
-   			<div class="item" data-item="a">
-   				<h5>Local Authority Stats:</h5>
-				<p align="left">Hygiene Mean: {{authStatsData.hygieneMean}}</p>
-				<p align="left">Hygiene Std: {{authStatsData.hygieneStdev}}</p>
-				<p align="left">Hygiene Mode: {{authStatsData.hygieneMode}}</p>
-
-   				<p align="left">Google Mean: {{authStatsData.googleMean}} </p>
-				<p align="left">Google Std: {{authStatsData.googleStdev}} </p>
-				<p align="left">Google Mode: {{authStatsData.googleMode}} </p>
-
-				<p align="left">Yelp Mean: {{authStatsData.yelpMean}} </p>
-				<p align="left">Yelp Std: {{authStatsData.yelpStdev}} </p>
-				<p align="left">Yelp Mode: {{authStatsData.yelpMode}} </p>
-   			</div>
-   		</div> <!-- /right-side -->
-   		<div class="image-part"></div>
-
-      <div class="row">
-        <div class="item">
-	   			<h5>Verb Word Count</h5>
-	   		<wordcloud></wordcloud>
-   			</div>
-
-      </div>
+	<div class="left-side">
+		<div class="item">
+			<h5>Hygiene Google & Yelp Rating Distributions</h5>
+			<pdfcouncil></pdfcouncil>
+		</div>
+		<br>
+		<div class="item">
+			<h5>Hygiene Correlations</h5>
+			<correlation></correlation>
+		</div>
+	</div> <!-- /left-side -->
+	<div class="right-side">
+		<div class="item">
+			<h5>Local Authority Stats:</h5>
+			<br>
+			<div style ="border-radius: 27px 27px 27px 27px;
+			-moz-border-radius: 27px 27px 27px 27px;
+			-webkit-border-radius: 27px 27px 27px 27px;
+			border: 2px dashed #1CBCA9;">
+			<span align="left"><span style=" font-size:25px;">Hygiene Mean:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.hygieneMean}}  </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Hygiene Median:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.hygieneMedian}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Hygiene Std:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.hygieneStdev}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Hygiene Mode:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.hygieneMode}} </span></span><br>
+			</div>
+			<br>
+			<div style ="border-radius: 27px 27px 27px 27px;
+			-moz-border-radius: 27px 27px 27px 27px;
+			-webkit-border-radius: 27px 27px 27px 27px;
+			border: 2px dashed #4285F4;">
+			<span align="left" ><span style=" font-size:25px;">Google Mean:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.googleMean}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Google Median:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.googleMedian}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Google Std:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.googleStdev}}  </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Google Mode:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.googleMode}}  </span></span><br>
+			</div>
+			<br>
+			<div style ="border-radius: 27px 27px 27px 27px;
+			-moz-border-radius: 27px 27px 27px 27px;
+			-webkit-border-radius: 27px 27px 27px 27px;
+			border: 2px dashed #D9252E;">
+			<span align="left"><span style=" font-size:25px;">Yelp Mean:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.yelpMean}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Yelp Median:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.yelpMedian}} </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Yelp Std:</span> <span style="color:#333333; font-size:25px;"> {{authStatsData.yelpStdev}}  </span></span><br><br>
+			<span align="left"><span style=" font-size:25px;">Yelp Mode:</span> <span style="color:#333333; font-size:25px;">{{authStatsData.yelpMode}} </span></span>
+			</div>
+			
+		</div>
+	</div> <!-- /right-side -->
+	<div class="image-part"></div>
+	<br><br><br><br>
+		
+	<div class='container' align="center" >
+		
+		<div style ="float:left; display: inline-block;"><h5>Top Restaurant Types & Average Ratings</h5><councilcategorystats></councilcategorystats></div> 
+		<div style ="float:middle; display: inline-block;"><h5>Most Used Adjectives</h5><wordcloud></wordcloud></div>
+	</div>
+	
 </div> <!-- /process-content -->
 
