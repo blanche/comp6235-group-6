@@ -29,15 +29,12 @@ export class CouncilCategoryStatsComponent extends GoogleChartComponent{
 	
     public update(newAuthoritiesCategoryData: any) {
 
-		//let chartData  : any = [];
-		console.log('CategoryStats');
 		let chartData=[];
 		let city = ""
 		chartData.push(['Restaurant Type', 'Hygiene', 'Google', 'Yelp'])
 		for (let i=0; i<newAuthoritiesCategoryData.length; i++ ){
 			for (let p=0; p<newAuthoritiesCategoryData[i].categoryResults.length; p++ ){
 				let categoryData = []
-				console.log(newAuthoritiesCategoryData[i].categoryResults[p])
 				categoryData.push(newAuthoritiesCategoryData[i].categoryResults[p].category)
 				categoryData.push(newAuthoritiesCategoryData[i].categoryResults[p].hygieneMean)
 				categoryData.push(newAuthoritiesCategoryData[i].categoryResults[p].googleMean)
@@ -45,14 +42,13 @@ export class CouncilCategoryStatsComponent extends GoogleChartComponent{
 				chartData.push(categoryData)
 			}
 		}
-		console.log(chartData)
-		
         this.options = {
 			width: 690,
 			height: 300,
 			colors: ['#1CBCA9', '#4285F4','#D9252E'],
 			chartArea: {width: "80%", height: "80%"},
-			legend: { position: 'top', alignment: 'center' }
+			legend: { position: 'top', alignment: 'center' },
+			vAxis: {title: 'Rating'}
         };
           setTimeout(() =>
             {

@@ -30,6 +30,10 @@ export class DataService {
 	//Observable Data CouncilCategoryStats
     private authoritiesCategoryData = new BehaviorSubject(Array());
     public newAuthoritiesCategoryData$ = this.authoritiesCategoryData.asObservable();
+	
+	//Observable Data CouncilLowerThanAvgStats
+    private authoritiesLowerThanAvgStats = new BehaviorSubject(Array());
+    public newAuthoritiesLowerThanAvgStats$ = this.authoritiesLowerThanAvgStats.asObservable();
 
 	public getDataForAuthority(authorityName:string): void {
 		var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
@@ -89,6 +93,16 @@ export class DataService {
 		);
 	}
   
+	public getAuthorityLowerThanAvgData(authorityName:string):void{
+	 var query = this.dataUrl + "councillowerthanavg/" + authorityName;
+	this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.authoritiesLowerThanAvgStats.next(data)
+		 }).bind(this)
+		);
+	}
   
     private _getData(query:string): Observable<any> {
         return this.http.get(query)

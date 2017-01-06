@@ -35,7 +35,6 @@ export class CouncilCorrelationComponent extends GoogleChartComponent{
 		let city = ""
 		for (let i=0; i<newAuthoritiesStatsData.length; i++ ){
 			city = newAuthoritiesStatsData[i].LocalAuthorityName
-			console.log(newAuthoritiesStatsData[i].LocalAuthorityName)
 			chartData.push(['Google', newAuthoritiesStatsData[i].googleCorrelationHygene, '#4285F4', 'Google' ]);
 			chartData.push(['Yelp', newAuthoritiesStatsData[i].justEatCorrelationHygene, '#D9252E', 'Yelp' ]);
 			chartData.push(['JustEat', newAuthoritiesStatsData[i].yelpCorrelationHygene, '#FF9E16', 'JustEat' ]);
@@ -43,11 +42,11 @@ export class CouncilCorrelationComponent extends GoogleChartComponent{
 		
         this.options = {
 			hAxis: {title: 'Correlation Coefficient', minValue: -0.2, maxValue: 0.2},
-			vAxis: {title: 'Source', minValue: -0.3, maxValue: 0.3},
+			vAxis: { minValue: -0.3, maxValue: 0.3},
 			legend: 'none',
 			width: 400,
 			height: 300,
-			chartArea: {width: "90%", height: "80%"},
+			chartArea: {width: "95%", height: "80%"},
         };
 
           setTimeout(() =>

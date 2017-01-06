@@ -59,6 +59,13 @@ class CouncilWordReviewAPI(Resource):
         cursor = db.localAuthReviews.find(query)
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
         return  json_docs
+		
+class CoulcilCategoryLowerAvgAPI(Resource):
+    def get(self, council_name):
+        query = {"LocalAuthorityName": council_name}
+        cursor = db.AuthLowerThanAvg.find(query)
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return  json_docs
 
 class PdfCalculationAPI(Resource):
 
@@ -89,6 +96,8 @@ class CouncilCategorystatsAPI(Resource):
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
         return json_docs
 		
+		
+api.add_resource(CoulcilCategoryLowerAvgAPI, '/api/v1/councillowerthanavg/<string:council_name>')
 api.add_resource(CouncilCategorystatsAPI, '/api/v1/councilcategorystats/<string:council_name>')
 api.add_resource(PdfCalculationAPI, '/api/v1/councilPdf/<string:council_name>')
 api.add_resource(CouncilWordReviewAPI, '/api/v1/councilwords/<string:council_name>')
