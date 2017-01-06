@@ -80,14 +80,11 @@ export class PdfChartComponent extends GoogleChartComponent{
 			colors: ['#4285F4','#D9252E','#1CBCA9'],
 			width: 400,
             height: 300,
-			chartArea: {width: "90%", height: "80%"},
+			chartArea: {width: "94%", height: "80%"},
             curveType: 'function',
             interpolateNulls: true,
             legend: { position: 'bottom' },
-            vAxes: {
-              0: {title: 'Percentage'},
-              1: {title: 'Rating'}
-            },
+			vAxis: { minValue:0}
         };
 
         setTimeout(() => {

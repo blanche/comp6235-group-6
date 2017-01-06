@@ -26,11 +26,11 @@ export class GoogleChartComponent implements OnInit {
         google.charts.setOnLoadCallback(function(){console.log("LOADED GOOGLE")})
      }
   }
-
+	/*
     drawGraph(){
         console.log("DrawGraph base class!!!! ");
     }
-
+	*/
 
     createScatterPlot(element:any):any {
         console.log(google);

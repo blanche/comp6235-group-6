@@ -13,6 +13,7 @@ import {WordCloudComponent} from "./council-specific/word-cloud/council.wordclou
 import {PdfChartComponent} from "./council-specific/council-pdf/council.pdf.council";
 import {CouncilCorrelationComponent} from "./council-specific/council.correlation.component";
 import {CouncilCategoryStatsComponent} from "./council-specific/council.categorystats.component";
+import {CouncilLowerThanAvgStats} from "./council-specific/council.lowerThanAvgStats.component";
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import {CouncilCategoryStatsComponent} from "./council-specific/council.category
         PdfChartComponent,
 		CouncilCorrelationComponent,
 		CouncilCategoryStatsComponent,
+		CouncilLowerThanAvgStats,
     ],
     bootstrap: [AppComponent],
     entryComponents: [AppComponent],
