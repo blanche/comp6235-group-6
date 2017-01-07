@@ -6,6 +6,12 @@ ng2-auto-complete{
   z-index: 999!important;
 }
 
-div#councilPickerContainer{
-  text-align: center;
+.centers {
+    margin: auto;
+    width: 25%;
+}
+
+
+div#councilPickerContainer div {
+  margin-left: 25% !important;
 }

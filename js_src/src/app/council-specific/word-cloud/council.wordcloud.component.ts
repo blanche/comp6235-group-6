@@ -3,7 +3,7 @@
  */
 
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnChanges, Input} from '@angular/core';
 import * as d3 from 'd3';
 import {DataService} from "../../data-services/data.service";
 
@@ -14,12 +14,19 @@ declare var cloundLibLoaded:any;
 @Component({
   selector: 'wordcloud',
   template: `
+        <md-radio-group [(ngModel)]="wordType" (ngModelChange)="triggerRedraw($event)">
+            <md-radio-button value="adjList">Adjectives</md-radio-button>
+            <md-radio-button value="verbList">Verbs</md-radio-button>
+            <md-radio-button value="nounList">Nouns</md-radio-button>
+        </md-radio-group>
         <div id="wordCloud"></div>
-       `
+       `,
 })
 
 
 export class WordCloudComponent implements OnInit {
+  @Input() wordType:string;
+
 
   private data:Array<any>;
   private d3:any;
@@ -27,14 +34,15 @@ export class WordCloudComponent implements OnInit {
   private cloundLibLoaded:any;
   private width:any;
   private height:any;
-
+  private dataServiceInstance : any;
   //d3 components
 
   private svg:any;
-  private wordType:string;
+
 
 
   constructor(private dataService:DataService) {
+    this.dataServiceInstance = dataService;
     this.wordType = "adjList";
     this.data = [];
     this.d3 = d3;
@@ -50,6 +58,11 @@ export class WordCloudComponent implements OnInit {
     if (cloundLibLoaded) {
       this.cloundLib = cloundLib;
     }
+  }
+
+
+  public triggerRedraw(changes){
+      this.drawGraph(this.dataServiceInstance.getCurrentCouncilWordData())
   }
 
 
@@ -89,7 +102,6 @@ export class WordCloudComponent implements OnInit {
     layout.start();
 
     function draw(words) {
-      console.log("draw");
       d3.select("wordCloud svg").remove();
       d3.select("wordCloud").append("svg")
         .attr("width", layout.size()[0])

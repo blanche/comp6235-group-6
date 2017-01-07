@@ -22,18 +22,26 @@ export class DataService {
     //Observable Data CouncilWords
     private councilWordData = new BehaviorSubject(Array());
     public newCouncilWordDataAnnounced$ = this.councilWordData.asObservable();
+  
+    public getCurrentCouncilWordData(){
+        return this.councilWordData.getValue();
+    }
 
     //Observable PDF Council
     private councilPdfData= new BehaviorSubject(Array());
     public newCouncilPdfDataAnnounced$ = this.councilPdfData.asObservable();
-	
+
 	//Observable Data CouncilCategoryStats
     private authoritiesCategoryData = new BehaviorSubject(Array());
     public newAuthoritiesCategoryData$ = this.authoritiesCategoryData.asObservable();
-	
+
 	//Observable Data CouncilLowerThanAvgStats
     private authoritiesLowerThanAvgStats = new BehaviorSubject(Array());
     public newAuthoritiesLowerThanAvgStats$ = this.authoritiesLowerThanAvgStats.asObservable();
+
+  	//Observable Data CategorySpecific Best And Worse Areas
+    private categoryBestStats = new BehaviorSubject(Array());
+    public newCategoryBestStatsAnnounced$ = this.categoryBestStats.asObservable();
 
 	public getDataForAuthority(authorityName:string): void {
 		var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
@@ -92,7 +100,7 @@ export class DataService {
 		 }).bind(this)
 		);
 	}
-  
+
 	public getAuthorityLowerThanAvgData(authorityName:string):void{
 	 var query = this.dataUrl + "councillowerthanavg/" + authorityName;
 	this._getData(query).subscribe(
@@ -103,7 +111,7 @@ export class DataService {
 		 }).bind(this)
 		);
 	}
-  
+
     private _getData(query:string): Observable<any> {
         return this.http.get(query)
     }

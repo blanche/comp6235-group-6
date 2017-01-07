@@ -13,3 +13,7 @@ body {
 div#selectionCouncil{
   padding-bottom: 50px;
 }
+
+ng2-auto-complete{
+  align-self: center;
+}

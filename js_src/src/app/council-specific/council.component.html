@@ -1,7 +1,5 @@
- <div class="center">
-  <div id="councilPickerContainer">
+ <div class="centers" id="councilPickerContainer">
       <input id=councilPicker class="input-lg" placeholder="Southampton" auto-complete [(ngModel)]="selectedCouncil" [source]="councilList" (valueChanged)="getAuthorityData()" />
-  </div>
 </div>
 
 <div class="row process-content">
@@ -24,34 +22,34 @@
 			<span align="left"><span style=" font-size:22px;">Hygiene Median:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneMedian}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Hygiene Mode:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneMode}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Hygiene Std:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneStdev}} </span></span><br><br>
-			
-			
+
+
 			<span align="left" ><span style=" font-size:22px;">Google Mean:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMean}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Google Median:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMedian}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Google Mode:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMode}}  </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Google Std:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleStdev}}  </span></span><br><br>
-			
-			
+
+
 			<span align="left"><span style=" font-size:22px;">Yelp Mean:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMean}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Yelp Median:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMedian}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Yelp Mode:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMode}} </span></span><br><br>
 			<span align="left"><span style=" font-size:22px;">Yelp Std:</span> <span style="color:#D9252E; font-size:22px;"> {{authStatsData.yelpStdev}}  </span></span><br><br>
-			
-			
+
+
 		</div>
 	</div> <!-- /right-side -->
 	<div class="image-part"></div>
 	<br><br><br><br><br>
-		
+
 	<div class='container' align="center" >
-		
-		<div style ="float:left; display: inline-block;"><h3>Top Restaurant Types & Average Ratings</h3><councilcategorystats></councilcategorystats></div> 
+
+		<div style ="float:left; display: inline-block;"><h3>Top Restaurant Types & Average Ratings</h3><councilcategorystats></councilcategorystats></div>
 		<div style ="float:middle; display: inline-block;"><h3>Most Used Adjectives</h3><wordcloud></wordcloud></div>
 		<h3>Percentage of Restaurant Types with Lower Hygiene Rating than City Average</h3>
 		<councillowerthanavg></councillowerthanavg>
-		
+
 	</div>
-	
-	
+
+
 </div> <!-- /process-content -->
 
