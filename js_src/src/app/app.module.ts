@@ -6,14 +6,19 @@ import {HttpModule} from "@angular/http";
 import {OverviewComponent} from "./overview/overview.component";
 import {Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import {FormsModule} from "@angular/forms";
+import {MdRadioModule} from "@angular2-material/radio";
+import { MdUniqueSelectionDispatcher } from '@angular2-material/core';
+
+//Council imports
 import {CouncilComponent} from "./council-specific/council.component";
-import {ScatterChartComponent} from "./council-specific/council.scatter.component";
 import {CouncilPriceScatterComponent} from "./council-specific/council.scatterprice.component";
 import {WordCloudComponent} from "./council-specific/word-cloud/council.wordcloud.component";
 import {PdfChartComponent} from "./council-specific/council-pdf/council.pdf.council";
 import {CouncilCorrelationComponent} from "./council-specific/council.correlation.component";
 import {CouncilCategoryStatsComponent} from "./council-specific/council.categorystats.component";
 import {CouncilLowerThanAvgStats} from "./council-specific/council.lowerThanAvgStats.component";
+//Category Imports
+import {CategoryComponent} from "./category-specific/category.component";
 
 @NgModule({
     imports: [
@@ -21,21 +26,22 @@ import {CouncilLowerThanAvgStats} from "./council-specific/council.lowerThanAvgS
         HttpModule,
         Ng2AutoCompleteModule,
         FormsModule,
+        MdRadioModule
     ],
     declarations: [
         AppComponent,
         OverviewComponent,
         CouncilComponent,
-        ScatterChartComponent,
         CouncilPriceScatterComponent,
         WordCloudComponent,
         PdfChartComponent,
-		CouncilCorrelationComponent,
-		CouncilCategoryStatsComponent,
-		CouncilLowerThanAvgStats,
+        CouncilCorrelationComponent,
+        CouncilCategoryStatsComponent,
+        CouncilLowerThanAvgStats,
+        CategoryComponent
     ],
     bootstrap: [AppComponent],
     entryComponents: [AppComponent],
-    providers: [DataService]
+    providers: [DataService, MdUniqueSelectionDispatcher]
 })
 export class AppModule { }

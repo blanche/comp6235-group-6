@@ -32,8 +32,8 @@ var CouncilComponent = (function () {
         core_1.Component({
             // moduleId: module.id,
             selector: 'council',
-            templateUrl: '/src/app/council-specific/council.component.html',
-            styleUrls: ['src/app/council-specific/council.component.css'],
+            templateUrl: '/src/app/council-specific/category.component.html',
+            styleUrls: ['src/app/council-specific/category.component.css'],
         }), 
         __metadata('design:paramtypes', [data_service_1.DataService])
     ], CouncilComponent);

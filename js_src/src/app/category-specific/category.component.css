@@ -1,0 +1,17 @@
+ng2-auto-complete{
+  z-index: 999!important;
+}
+
+div.centers2 {
+    margin: auto;
+    width: 16%;
+}
+
+
+div#categoryPickerContainer div {
+  margin-left: 16% !important;
+}
+
+div#categoryPickerContainer{
+  color:black;
+}

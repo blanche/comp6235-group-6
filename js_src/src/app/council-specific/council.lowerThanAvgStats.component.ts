@@ -25,33 +25,43 @@ export class CouncilLowerThanAvgStats extends GoogleChartComponent{
             dataService.newAuthoritiesLowerThanAvgStats$.subscribe(
                 newAuthoritiesLowerThanAvgStats => this.update(newAuthoritiesLowerThanAvgStats)
             );
-    };	
-	
+    };
+
     public update(newAuthoritiesLowerThanAvgStats: any) {
 
 		let chartData=[];
-		let city = ""
-		chartData.push(['Restaurant Type', 'Hygiene', { role: 'style' } ])
-		console.log(newAuthoritiesLowerThanAvgStats)
-		
-		for (let i=0; i<newAuthoritiesLowerThanAvgStats.length; i++ ){
-			for (let p=0; p<newAuthoritiesLowerThanAvgStats[i].lowerThanAvgList.length; p++ ){
-				let categoryData = []
-				categoryData.push(newAuthoritiesLowerThanAvgStats[i].lowerThanAvgList[p].category)
-				categoryData.push(newAuthoritiesLowerThanAvgStats[i].lowerThanAvgList[p].hygiene)
-				categoryData.push(' \'stroke-color: #7a2f84; stroke-width: 2; \' ')
-				chartData.push(categoryData)
-			}
-		}
-		
-        this.options = {
-			width: 1300,
-			height: 300,
-			colors: ['#7a2f84'],
-			legend: { position: 'none' },
-			vAxis: {title: 'Percentage', minValue: 0, maxValue: 100, format: '#\'%\''},
-			chartArea:{right: '16%',height: "70%" }
-        };
+		let city = "";
+		chartData.push(['Restaurant Type', 'Hygiene', { role: 'style' } ]);
+		console.log(newAuthoritiesLowerThanAvgStats);
+    let lowerThanAv : Array<any>= [];
+    if(newAuthoritiesLowerThanAvgStats.length != 0) {
+      lowerThanAv = newAuthoritiesLowerThanAvgStats[0].lowerThanAvgList;
+    }
+    lowerThanAv.sort((n1,n2) => {
+        if(n1.hygiene > n2.hygiene){
+          return -1;
+        }else{
+          return 1;
+        }
+      })
+
+    for (let p=0; p<lowerThanAv.length; p++) {
+        let categoryData = [];
+        categoryData.push(lowerThanAv[p].category);
+        categoryData.push(lowerThanAv[p].hygiene);
+        categoryData.push(' \'stroke-color: #7a2f84; stroke-width: 2; \' ');
+        chartData.push(categoryData)
+    }
+
+
+    this.options = {
+        width: 1300,
+        height: 300,
+        colors: ['#7a2f84'],
+        legend: { position: 'none' },
+        vAxis: {title: 'Percentage', minValue: 0, maxValue: 100, format: '#\'%\''},
+        chartArea:{right: '16%',height: "70%" }
+    };
           setTimeout(() =>
             {
 				if ("visualization" in google) {
