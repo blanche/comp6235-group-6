@@ -2,15 +2,14 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from src.db.connection import DbConnection
 from bson import json_util
+from itertools import groupby, tee
 import json
-
+from collections import OrderedDict
 from collections import Counter
 
 app = Flask(__name__)
 api = Api(app)
 db = DbConnection().get_restaurant_db()
-
-todos = {}
 
 class OverviewListAPI(Resource):
     def get(self):
@@ -90,12 +89,60 @@ class PdfCalculationAPI(Resource):
         return json_dumps
 		
 class CouncilCategorystatsAPI(Resource):
+
     def get(self, council_name):
         query = {"LocalAuthorityName":council_name}
         cursor = db.localAuthCategory.find(query)
         json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
         return json_docs
-		
+
+class CategoriesTopFiveBottomFiveAPI(Resource):
+
+    def get(self, category):
+        query = {"yelp.categories":category}
+        fields_to_find = ["google.rating","yelp.rating","hygiene.RatingValue","hygiene.LocalAuthorityName"]
+        cursor = db.overall.find(query,fields_to_find)
+        records = [doc for doc in cursor]
+
+        google_top_bottom_5 = {"top":[], "bottom":[]}
+        yelp_top_bottom_5 = {"top": [], "bottom": []}
+        hygiene_top_bottom_5 = {"top": [], "bottom": []}
+
+        overall_data = OrderedDict()
+
+        data = sorted(records, key=lambda x:x["hygiene"]["LocalAuthorityName"])
+        for key, group in groupby(data, lambda x:x["hygiene"]["LocalAuthorityName"]):
+            g1, g2, g3 ,g4 = tee(group,4)
+            count_g = sum(1 for _ in g1)
+            google_average = sum([rec["google"]["rating"]
+                                    if "google" in rec and type(rec["google"]["rating"]) != type("str") and rec["google"]["rating"] != None
+                                     else 0
+                                     for rec in g2])/count_g
+
+            yelp_average = sum([rec["yelp"]["rating"] if "yelp" in rec else 0 for rec in g3])/count_g
+
+            hygiene_average = sum([rec["hygiene"]["RatingValue"]
+                                    if "hygiene" in rec and rec["hygiene"]["RatingValue"] != None
+                                    else 0
+                                    for rec in g4])/count_g
+
+            overall_data[key] = {"google":google_average, "yelp":yelp_average, "hygiene":hygiene_average}
+
+        yelp_top_bottom_5["top"] =  sorted(overall_data.items(), key=lambda x : x[1]["yelp"], reverse=True)[:5]
+        yelp_top_bottom_5["bottom"] = sorted(overall_data.items(), key=lambda x : x[1]["yelp"], reverse=False)[:5]
+
+        #filter 0's from hygiene
+        hygiene_data = {k: v for k, v in overall_data.items() if v["hygiene"] != 0}
+        hygiene_top_bottom_5["top"] =  sorted(hygiene_data.items(), key=lambda x : x[1]["hygiene"], reverse=True)[:5]
+        hygiene_top_bottom_5["bottom"] = sorted(hygiene_data.items(), key=lambda x : x[1]["hygiene"], reverse=False)[:5]
+
+        #filter 0's from google
+        google_data = {k: v for k, v in overall_data.items() if v["google"] != 0}
+        google_top_bottom_5["top"] = sorted(google_data.items(), key=lambda x: x[1]["google"], reverse=True)[:5]
+        google_top_bottom_5["bottom"] = sorted(google_data.items(), key=lambda x: x[1]["google"], reverse=False)[:5]
+        json_dumps = json.dumps({"yelp":yelp_top_bottom_5, "hygiene":hygiene_top_bottom_5, "google":google_top_bottom_5},
+                                default=json_util.default)
+        return json_dumps
 		
 api.add_resource(CoulcilCategoryLowerAvgAPI, '/api/v1/councillowerthanavg/<string:council_name>')
 api.add_resource(CouncilCategorystatsAPI, '/api/v1/councilcategorystats/<string:council_name>')
@@ -105,6 +152,7 @@ api.add_resource(CouncilStatsAPI, '/api/v1/councilstats/<string:council_name>')
 api.add_resource(OverviewListAPI, '/api/v1/overall', endpoint = 'overviews')
 api.add_resource(OverViewAPI, '/api/v1/overall/<int:id>', endpoint = 'overview')
 api.add_resource(CouncilNameListAPI, '/api/v1/councilnames/')
+api.add_resource(CategoriesTopFiveBottomFiveAPI, '/api/v1/categoriestopbottom/<string:category>')
 
 
 if __name__ == '__main__':

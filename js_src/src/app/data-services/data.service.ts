@@ -22,7 +22,7 @@ export class DataService {
     //Observable Data CouncilWords
     private councilWordData = new BehaviorSubject(Array());
     public newCouncilWordDataAnnounced$ = this.councilWordData.asObservable();
-  
+
     public getCurrentCouncilWordData(){
         return this.councilWordData.getValue();
     }
@@ -42,6 +42,10 @@ export class DataService {
   	//Observable Data CategorySpecific Best And Worse Areas
     private categoryBestStats = new BehaviorSubject(Array());
     public newCategoryBestStatsAnnounced$ = this.categoryBestStats.asObservable();
+
+    public getCurrentBestWorseCategory(){
+        return this.categoryBestStats.getValue();
+    }
 
 	public getDataForAuthority(authorityName:string): void {
 		var query = this.dataUrl  + 'overall?hygiene.LocalAuthorityName=' + authorityName;
@@ -103,7 +107,7 @@ export class DataService {
 
 	public getAuthorityLowerThanAvgData(authorityName:string):void{
 	 var query = this.dataUrl + "councillowerthanavg/" + authorityName;
-	this._getData(query).subscribe(
+	  this._getData(query).subscribe(
 			((res : any) =>
 		 {
 			 let data = this.extractData(res);
@@ -111,6 +115,18 @@ export class DataService {
 		 }).bind(this)
 		);
 	}
+
+  public getCategoryTopBottomFive(categoryName:string):void{
+    var query = this.dataUrl + "categoriestopbottom/" + categoryName;
+	  this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.categoryBestStats.next(data)
+		 }).bind(this)
+		);
+	}
+
 
     private _getData(query:string): Observable<any> {
         return this.http.get(query)

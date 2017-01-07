@@ -1,0 +1,15 @@
+<div>
+    <md-radio-group class="lightgray" [(ngModel)]="topBottomCategory" (ngModelChange)="topBottomRedraw($event)">
+        <md-radio-button value="hygiene">Hygiene</md-radio-button>
+        <md-radio-button value="yelp">Yelp</md-radio-button>
+        <md-radio-button value="google">Google</md-radio-button>
+    </md-radio-group>
+
+    <div id="topCategoriesContainer">
+        <div id="topCategories" style="width: 400px; height: 300px;"></div>
+    </div>
+
+    <div id="bottomCategoriesContainer">
+      <div id="bottomCategories" style="width: 400px; height: 300px;"></div>
+    </div>
+</div>

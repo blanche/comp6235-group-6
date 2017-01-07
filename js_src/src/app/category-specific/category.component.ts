@@ -30,8 +30,8 @@ export class CategoryComponent implements OnInit {
     }
 
     getCategorySpecific(): void{
-        if(this.categoriesList.indexOf(this.selectedCategory) > 0) {
-
+        if(this.categoriesList.indexOf(this.selectedCategory) > -1) {
+            this.dataService.getCategoryTopBottomFive(this.selectedCategory);
         }
     }
 
