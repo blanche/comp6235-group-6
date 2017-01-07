@@ -48,14 +48,14 @@ export class CouncilComponent implements OnInit {
           this.authStatsData = data[0]
       }
     }
-	
+
     ngOnInit(): void {
         this.councilList = COUNCILNAMES;
         this.selectedCouncil = COUNCILNAMES[13];
     }
 
     getAuthorityData(): void{
-        if(this.councilList.indexOf(this.selectedCouncil) > 0) {
+        if(this.councilList.indexOf(this.selectedCouncil) > -1) {
           this.dataService.getAuthorityStatsData(this.selectedCouncil);
           this.dataService.getCouncilWordData(this.selectedCouncil);
           this.dataService.getAuthorityCategoryData(this.selectedCouncil);
