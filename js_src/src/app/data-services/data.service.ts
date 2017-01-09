@@ -10,7 +10,11 @@ export class DataService {
 
     constructor(private http:Http) {
     }
-
+	
+	// Observable Data Category
+	private categoryStatsData = new BehaviorSubject(Array());
+	public newCategoryDataAnnounced$ = this.categoryStatsData.asObservable();
+	
     // Observable Data AuthoritesData
     private authoritesData = new BehaviorSubject(Array());
     public newAuthoritesDataAnnounced$ = this.authoritesData.asObservable();
@@ -70,7 +74,17 @@ export class DataService {
 		);
 	}
 
-
+	public getCategoryStats():void{
+	 var query = this.dataUrl + "categorystats/";
+	this._getData(query).subscribe(
+			((res : any) =>
+		 {
+			 let data = this.extractData(res);
+			 this.categoryStatsData.next(data)
+		 }).bind(this)
+		);
+	}
+	
 	public getCouncilPdfData(authorityName:string):void{
 	 var query = this.dataUrl + "councilPdf/" + authorityName;
 	 this._getData(query).subscribe(

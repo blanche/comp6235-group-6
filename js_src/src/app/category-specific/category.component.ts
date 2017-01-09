@@ -17,9 +17,6 @@ export class CategoryComponent implements OnInit {
     public selectedCategory : string;
     public categoriesList : Array<string>;
 
-
-
-
     constructor(private dataService: DataService) {
 
     };

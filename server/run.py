@@ -97,8 +97,8 @@ class CouncilCategorystatsAPI(Resource):
         return json_docs
 
 class CategoriesTopFiveBottomFiveAPI(Resource):
-
     def get(self, category):
+        MIN_NUMBER_OF_RESTURANTS_NEEDED = 5
         query = {"yelp.categories":category}
         fields_to_find = ["google.rating","yelp.rating","hygiene.RatingValue","hygiene.LocalAuthorityName"]
         cursor = db.overall.find(query,fields_to_find)
@@ -114,23 +114,27 @@ class CategoriesTopFiveBottomFiveAPI(Resource):
         for key, group in groupby(data, lambda x:x["hygiene"]["LocalAuthorityName"]):
             g1, g2, g3 ,g4 = tee(group,4)
             count_g = sum(1 for _ in g1)
-            google_average = sum([rec["google"]["rating"]
-                                    if "google" in rec and type(rec["google"]["rating"]) != type("str") and rec["google"]["rating"] != None
-                                     else 0
-                                     for rec in g2])/count_g
+            if count_g>=MIN_NUMBER_OF_RESTURANTS_NEEDED:
+                google_average = sum([rec["google"]["rating"]
+                                        if "google" in rec and type(rec["google"]["rating"]) != type("str") and rec["google"]["rating"] != None
+                                         else 0
+                                         for rec in g2])/count_g
 
-            yelp_average = sum([rec["yelp"]["rating"] if "yelp" in rec else 0 for rec in g3])/count_g
+                yelp_average = sum([rec["yelp"]["rating"] if "yelp" in rec else 0 for rec in g3])/count_g
 
-            hygiene_average = sum([rec["hygiene"]["RatingValue"]
-                                    if "hygiene" in rec and rec["hygiene"]["RatingValue"] != None
-                                    else 0
-                                    for rec in g4])/count_g
+                hygiene_average = sum([rec["hygiene"]["RatingValue"]
+                                        if "hygiene" in rec and rec["hygiene"]["RatingValue"] != None
+                                        else 0
+                                        for rec in g4])/count_g
 
-            overall_data[key] = {"google":google_average, "yelp":yelp_average, "hygiene":hygiene_average}
+                overall_data[key] = {"google":google_average, "yelp":yelp_average, "hygiene":hygiene_average}
+            else:
+                overall_data[key] = {"google":0, "yelp":0, "hygiene":0}
 
-        yelp_top_bottom_5["top"] =  sorted(overall_data.items(), key=lambda x : x[1]["yelp"], reverse=True)[:5]
-        yelp_top_bottom_5["bottom"] = sorted(overall_data.items(), key=lambda x : x[1]["yelp"], reverse=False)[:5]
-
+        yelp_data = {k: v for k, v in overall_data.items() if v["yelp"] != 0}
+        yelp_top_bottom_5["top"] =  sorted(yelp_data.items(), key=lambda x : x[1]["yelp"], reverse=True)[:5]
+        yelp_top_bottom_5["bottom"] = sorted(yelp_data.items(), key=lambda x : x[1]["yelp"], reverse=False)[:5]
+		
         #filter 0's from hygiene
         hygiene_data = {k: v for k, v in overall_data.items() if v["hygiene"] != 0}
         hygiene_top_bottom_5["top"] =  sorted(hygiene_data.items(), key=lambda x : x[1]["hygiene"], reverse=True)[:5]
@@ -144,6 +148,14 @@ class CategoriesTopFiveBottomFiveAPI(Resource):
                                 default=json_util.default)
         return json_dumps
 		
+class CategoryStatsAPI(Resource):
+    def get(self):
+        query = {}
+        cursor = db.CategoryStats.find(query)
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return json_docs
+		
+api.add_resource(CategoryStatsAPI, '/api/v1/categorystats/')
 api.add_resource(CoulcilCategoryLowerAvgAPI, '/api/v1/councillowerthanavg/<string:council_name>')
 api.add_resource(CouncilCategorystatsAPI, '/api/v1/councilcategorystats/<string:council_name>')
 api.add_resource(PdfCalculationAPI, '/api/v1/councilPdf/<string:council_name>')

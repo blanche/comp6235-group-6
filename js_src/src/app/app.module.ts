@@ -20,6 +20,7 @@ import {CouncilLowerThanAvgStats} from "./council-specific/council.lowerThanAvgS
 //Category Imports
 import {CategoryComponent} from "./category-specific/category.component";
 import {TopBottomFiveGraphComponent} from "./category-specific/top_bottom_five/category.topbottomfive.component";
+import {CategoryStats} from "./category-specific/category.stats.component";
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {TopBottomFiveGraphComponent} from "./category-specific/top_bottom_five/c
         CouncilCategoryStatsComponent,
         CouncilLowerThanAvgStats,
         CategoryComponent,
-        TopBottomFiveGraphComponent
+        TopBottomFiveGraphComponent,
+		CategoryStats
     ],
     bootstrap: [AppComponent],
     entryComponents: [AppComponent],

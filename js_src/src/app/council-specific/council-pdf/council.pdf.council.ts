@@ -84,7 +84,7 @@ export class PdfChartComponent extends GoogleChartComponent{
             curveType: 'function',
             interpolateNulls: true,
             legend: { position: 'bottom' },
-			vAxis: { minValue:0}
+			vAxis: { viewWindow: {min: 0,max: 1}}
         };
 
         setTimeout(() => {

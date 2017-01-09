@@ -56,18 +56,20 @@ export class TopBottomFiveGraphComponent extends GoogleChartComponent{
           }
           let topDataArray = google.visualization.arrayToDataTable(topArray);
           let options = {
-              title: "Top and bottom rated councils",
-              width: 400,
+			  backgroundColor: "transparent",
+              width: 550,
               height: 300,
-              bar: {groupWidth: "95%"},
               legend: { position: "none" },
               hAxis: {
-                viewWindow: {
-                  min: 0,
-                  max: 5
-                },
-                ticks: [0, 1, 2, 3, 4, 5]
-              }
+				title: 'Average Rating',
+				titleTextStyle: {color: '#FFFFFF'},
+				textStyle: {color: '#FFFFFF' },
+				gridlines: {color: "#FFFFFF"},
+				viewWindow: {min: 0,max: 5},
+				ticks: [0, 1, 2, 3, 4, 5]
+              },
+			  vAxis:{textStyle: { color: '#FFFFFF' },gridlines: {color: "#FFFFFF"}},
+			  colors: ['#079E3E']
           };
 
           let topChart = this.createBarChart(document.getElementById('topCategories'));
@@ -86,17 +88,20 @@ export class TopBottomFiveGraphComponent extends GoogleChartComponent{
           }
           let topDataArray = google.visualization.arrayToDataTable(topArray);
           let options = {
-              width: 400,
+			  backgroundColor: "transparent",
+              width: 550,
               height: 300,
-              bar: {groupWidth: "95%"},
               legend: { position: "none" },
-              hAxis: {
-                viewWindow: {
-                  min: 0,
-                  max: 5
-                },
-                ticks: [0, 1, 2, 3, 4, 5]
-              }
+              hAxis: { 
+				title: 'Average Rating',
+				titleTextStyle: {color: '#FFFFFF'},
+				textStyle: {color: '#FFFFFF'},
+				gridlines: {color: "#FFFFFF"},
+				viewWindow: {min: 0,max: 5},
+				ticks: [0, 1, 2, 3, 4, 5]
+              },
+			  vAxis:{textStyle: { color: '#FFFFFF' },gridlines: {color: "#FFFFFF"}},
+			  colors: ['#9E0707']
           };
 
           let topChart = this.createBarChart(document.getElementById('bottomCategories'));
