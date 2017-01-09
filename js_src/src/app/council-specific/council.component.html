@@ -1,53 +1,110 @@
  <div class="centers" id="councilPickerContainer">
       <input id=councilPicker class="input-lg" placeholder="Southampton" auto-complete [(ngModel)]="selectedCouncil" [source]="councilList" (valueChanged)="getAuthorityData()" />
 </div>
-
+<style>
+td{
+	text-align:center;
+}
+</style>
 <div class="row process-content">
-	<div class="left-side">
-		<div class="item">
-			<h3>Hygiene Google & Yelp Rating Distributions</h3>
-			<pdfcouncil></pdfcouncil>
-		</div>
-		<br>
-		<div class="item">
-			<h3>Hygiene Correlations</h3>
-			<correlation></correlation>
-		</div>
-	</div> <!-- /left-side -->
-	<div class="right-side">
-		<div class="item">
-			<h3>Local Authority Stats:</h3>
-			<br>
-			<span align="left"><span style=" font-size:22px;">Hygiene Mean:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneMean}}  </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Hygiene Median:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneMedian}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Hygiene Mode:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneMode}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Hygiene Std:</span> <span style="color:#1CBCA9; font-size:22px;">{{authStatsData.hygieneStdev}} </span></span><br><br>
-
-
-			<span align="left" ><span style=" font-size:22px;">Google Mean:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMean}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Google Median:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMedian}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Google Mode:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleMode}}  </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Google Std:</span> <span style="color:#4285F4; font-size:22px;">{{authStatsData.googleStdev}}  </span></span><br><br>
-
-
-			<span align="left"><span style=" font-size:22px;">Yelp Mean:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMean}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Yelp Median:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMedian}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Yelp Mode:</span> <span style="color:#D9252E; font-size:22px;">{{authStatsData.yelpMode}} </span></span><br><br>
-			<span align="left"><span style=" font-size:22px;">Yelp Std:</span> <span style="color:#D9252E; font-size:22px;"> {{authStatsData.yelpStdev}}  </span></span><br><br>
-
-
-		</div>
-	</div> <!-- /right-side -->
-	<div class="image-part"></div>
-	<br><br><br><br><br>
-
 	<div class='container' align="center" >
-
+		<div style ="float:left; display: inline-block;"><!-- /left-side -->
+			<div class="item">
+				<h3>Hygiene Google & Yelp Rating Distributions</h3>
+				<pdfcouncil></pdfcouncil>
+			</div>
+			<br>
+			<div class="item">
+				<h3>Hygiene Correlations</h3>
+				<correlation></correlation>
+			</div>
+		</div>
+		
+		
+		<div style ="float:middle; display: inline-block;"> <!-- /Right-side -->
+			<div class="item">
+			<table class="table" style=" font-size:22px;">
+			<thead>
+			  <tr>
+				<th style="text-align:left" >Stat</th>
+				<th style="width:230px; text-align:center;" >United Kingdom</th>
+				<th style="width:230px; text-align:center;" >{{selectedCouncil}}</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Mean</td>
+				<td>4.35</td>
+				<td>{{authStatsData.hygieneMean}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Median</td>
+				<td>5</td>
+				<td>{{authStatsData.hygieneMedian}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Mode</td>
+				<td>5</td>
+				<td>{{authStatsData.hygieneMode}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> STD</td>
+				<td>1.02</td>
+				<td>{{authStatsData.hygieneStdev}}</td>
+			  </tr>
+			  <br>
+			  <tr>
+				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Mean</td>
+				<td>4.09</td>
+				<td>{{authStatsData.googleMean}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Median</td>
+				<td>4.1</td>
+				<td>{{authStatsData.googleMedian}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Mode</td>
+				<td>4.1</td>
+				<td>{{authStatsData.googleMode}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#4285F4;">Google</span> STD</td>
+				<td>0.46</td>
+				<td>{{authStatsData.googleStdev}}</td>
+			  </tr>
+			  <br>
+			  <tr>
+				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Mean</td>
+				<td>3.81</td>
+				<td>{{authStatsData.yelpMean}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Median</td>
+				<td>4</td>
+				<td>{{authStatsData.yelpMedian}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Mode</td>
+				<td>4</td>
+				<td>{{authStatsData.yelpMode}}</td>
+			  </tr>
+			  <tr>
+				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> STD</td>
+				<td>0.92</td>
+				<td>{{authStatsData.yelpStdev}}</td>
+			  </tr>
+			</tbody>
+		  </table>
+			</div>
+		</div>
+	</div>
+	<br><br><br>
+	<div class='container' align="center" >
 		<div style ="float:left; display: inline-block;"><h3>Top Restaurant Types & Average Ratings</h3><councilcategorystats></councilcategorystats></div>
 		<div style ="float:middle; display: inline-block;"><h3>Most Used Adjectives</h3><wordcloud></wordcloud></div>
-		<h3>Percentage of Restaurant Types with Lower Hygiene Rating than City Average</h3>
+		<h3>Hygiene Rating Distributions Compared to {{selectedCouncil}} Average</h3>
 		<councillowerthanavg></councillowerthanavg>
-
 	</div>
 
 

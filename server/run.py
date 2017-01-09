@@ -97,11 +97,8 @@ class CouncilCategorystatsAPI(Resource):
         return json_docs
 
 class CategoriesTopFiveBottomFiveAPI(Resource):
-
     def get(self, category):
-
         MIN_NUMBER_OF_RESTURANTS_NEEDED = 5
-
         query = {"yelp.categories":category}
         fields_to_find = ["google.rating","yelp.rating","hygiene.RatingValue","hygiene.LocalAuthorityName"]
         cursor = db.overall.find(query,fields_to_find)
@@ -137,7 +134,7 @@ class CategoriesTopFiveBottomFiveAPI(Resource):
         yelp_data = {k: v for k, v in overall_data.items() if v["yelp"] != 0}
         yelp_top_bottom_5["top"] =  sorted(yelp_data.items(), key=lambda x : x[1]["yelp"], reverse=True)[:5]
         yelp_top_bottom_5["bottom"] = sorted(yelp_data.items(), key=lambda x : x[1]["yelp"], reverse=False)[:5]
-
+		
         #filter 0's from hygiene
         hygiene_data = {k: v for k, v in overall_data.items() if v["hygiene"] != 0}
         hygiene_top_bottom_5["top"] =  sorted(hygiene_data.items(), key=lambda x : x[1]["hygiene"], reverse=True)[:5]
@@ -151,6 +148,14 @@ class CategoriesTopFiveBottomFiveAPI(Resource):
                                 default=json_util.default)
         return json_dumps
 		
+class CategoryStatsAPI(Resource):
+    def get(self):
+        query = {}
+        cursor = db.CategoryStats.find(query)
+        json_docs = [json.dumps(doc, default=json_util.default) for doc in cursor]
+        return json_docs
+		
+api.add_resource(CategoryStatsAPI, '/api/v1/categorystats/')
 api.add_resource(CoulcilCategoryLowerAvgAPI, '/api/v1/councillowerthanavg/<string:council_name>')
 api.add_resource(CouncilCategorystatsAPI, '/api/v1/councilcategorystats/<string:council_name>')
 api.add_resource(PdfCalculationAPI, '/api/v1/councilPdf/<string:council_name>')

@@ -60,8 +60,8 @@ export class CouncilComponent implements OnInit {
           this.dataService.getCouncilWordData(this.selectedCouncil);
           this.dataService.getAuthorityCategoryData(this.selectedCouncil);
           this.dataService.getAuthorityLowerThanAvgData(this.selectedCouncil);
-          this.dataService.getCouncilPdfData(this.selectedCouncil)
+          this.dataService.getCouncilPdfData(this.selectedCouncil);
+		  this.dataService.getCategoryStats();
         }
     }
-
 }

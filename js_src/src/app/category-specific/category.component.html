@@ -1,5 +1,12 @@
- <div class="centers2" id="categoryPickerContainer">
-      <input id="categoryPicker" class="input-lg"  auto-complete [(ngModel)]="selectedCategory" [source]="categoriesList" (valueChanged)="getCategorySpecific()" />
+<div align="center">
+	<h3 style="color:#FFFFFF;">Average Ratings in UK  by Restaurant Type</h3>
+	<div align="center"><categorystats></categorystats></div>
+	<br>
+	<div class="centers2" id="categoryPickerContainer">
+		  <input id="categoryPicker" class="input-lg" auto-complete [(ngModel)]="selectedCategory" [source]="categoriesList" (valueChanged)="getCategorySpecific()" />
+	</div>
+	<div align="center">
+		<h3 style="color:#FFFFFF;">Best & Worst Councils to visit for {{selectedCategory}} Restaurants</h3>
+		<topbottomcategories></topbottomcategories>
+	</div>
 </div>
-
-<topbottomcategories></topbottomcategories>

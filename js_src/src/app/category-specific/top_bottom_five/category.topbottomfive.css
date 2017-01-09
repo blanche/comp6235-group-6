@@ -3,5 +3,8 @@ topbottomcategories svg{
 }
 
 .lightgray div{
-  color:lightgray!important;
+  color:lightgray !important;
+}
+.md-radio-label { 
+  color: white !important;
 }

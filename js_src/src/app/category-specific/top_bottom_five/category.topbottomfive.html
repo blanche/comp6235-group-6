@@ -1,15 +1,22 @@
-<div>
-    <md-radio-group class="lightgray" [(ngModel)]="topBottomCategory" (ngModelChange)="topBottomRedraw($event)">
-        <md-radio-button value="hygiene">Hygiene</md-radio-button>
-        <md-radio-button value="yelp">Yelp</md-radio-button>
-        <md-radio-button value="google">Google</md-radio-button>
+
+
+<div align="center">
+    <md-radio-group [(ngModel)]="topBottomCategory" (ngModelChange)="topBottomRedraw($event)">
+        <md-radio-button value="hygiene"><font color="white">Hygiene</font></md-radio-button>
+        <md-radio-button value="yelp"><font color="white">Yelp</font></md-radio-button>
+        <md-radio-button value="google"><font color="white">Google</font></md-radio-button>
     </md-radio-group>
+</div>
 
-    <div id="topCategoriesContainer">
-        <div id="topCategories" style="width: 400px; height: 300px;"></div>
-    </div>
 
-    <div id="bottomCategoriesContainer">
-      <div id="bottomCategories" style="width: 400px; height: 300px;"></div>
-    </div>
+ 
+<div class='container' align="center" >
+	<div style ="float:middle; display:inline-block; width=:550px;">
+		<h3 style="color:#FFFFFF;">{{selectedCategory}}</h3>
+		<div id="topCategories"></div>
+	</div>
+	
+	<div style ="float:middle; display:inline-block; width=:550px;">
+		<div id="bottomCategories"></div>
+	</div>
 </div>

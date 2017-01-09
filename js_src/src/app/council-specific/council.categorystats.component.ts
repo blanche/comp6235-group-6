@@ -28,7 +28,6 @@ export class CouncilCategoryStatsComponent extends GoogleChartComponent{
     };	
 	
     public update(newAuthoritiesCategoryData: any) {
-
 		let chartData=[];
 		let city = ""
 		chartData.push(['Restaurant Type', 'Hygiene', 'Google', 'Yelp'])
@@ -48,7 +47,7 @@ export class CouncilCategoryStatsComponent extends GoogleChartComponent{
 			colors: ['#1CBCA9', '#4285F4','#D9252E'],
 			chartArea: {width: "80%", height: "80%"},
 			legend: { position: 'top', alignment: 'center' },
-			vAxis: {title: 'Rating'}
+			vAxis: {title: 'Average Rating'}
         };
           setTimeout(() =>
             {
