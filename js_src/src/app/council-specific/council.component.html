@@ -19,80 +19,188 @@ td{
 				<correlation></correlation>
 			</div>
 		</div>
-		
-		
+
+
 		<div style ="float:middle; display: inline-block;"> <!-- /Right-side -->
 			<div class="item">
 			<table class="table" style=" font-size:22px;">
 			<thead>
 			  <tr>
-				<th style="text-align:left" >Stat</th>
-				<th style="width:230px; text-align:center;" >United Kingdom</th>
-				<th style="width:230px; text-align:center;" >{{selectedCouncil}}</th>
+          <th style="text-align:left" >Stat</th>
+          <th style="width:230px; text-align:center;" >United Kingdom</th>
+          <th style="width:230px; text-align:center;" >{{selectedCouncil}}</th>
 			  </tr>
 			</thead>
 			<tbody>
 			  <tr>
 				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Mean</td>
 				<td>4.35</td>
-				<td>{{authStatsData.hygieneMean}}</td>
+				<td>
+            <div *ngIf="authStatsData.hygieneMean>=4.35">
+               {{authStatsData.hygieneMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf="authStatsData.hygieneMean<4.35">
+               {{authStatsData.hygieneMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Median</td>
-				<td>5</td>
-				<td>{{authStatsData.hygieneMedian}}</td>
+				<td>5.00</td>
+				<td>
+            <div *ngIf="authStatsData.hygieneMedian>=5">
+               {{authStatsData.hygieneMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.hygieneMedian<5'>
+              {{authStatsData.hygieneMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> Mode</td>
-				<td>5</td>
-				<td>{{authStatsData.hygieneMode}}</td>
+				<td>5.00</td>
+				<td>
+            <div *ngIf="authStatsData.hygieneMode>=5">
+               {{authStatsData.hygieneMode| number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.hygieneMode<5'>
+              {{authStatsData.hygieneMode | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#1CBCA9;">Hygiene</span> STD</td>
 				<td>1.02</td>
-				<td>{{authStatsData.hygieneStdev}}</td>
+				<td>
+            <div *ngIf="authStatsData.hygieneStdev>=1.02">
+               {{authStatsData.hygieneStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.hygieneStdev<1.02'>
+              {{authStatsData.hygieneStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <br>
 			  <tr>
 				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Mean</td>
 				<td>4.09</td>
-				<td>{{authStatsData.googleMean}}</td>
+				<td>
+            <div *ngIf="authStatsData.googleMean>=4.09">
+               {{authStatsData.googleMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.googleMean<4.09'>
+              {{authStatsData.googleMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Median</td>
-				<td>4.1</td>
-				<td>{{authStatsData.googleMedian}}</td>
+				<td>4.10</td>
+				<td>
+            <div *ngIf="authStatsData.googleMedian>=4.1">
+               {{authStatsData.googleMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.googleMedian<4.1'>
+              {{authStatsData.googleMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#4285F4;">Google</span> Mode</td>
-				<td>4.1</td>
-				<td>{{authStatsData.googleMode}}</td>
+				<td>4.10</td>
+				<td>
+            <div *ngIf="authStatsData.googleMode>=4.1">
+               {{authStatsData.googleMode | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.googleMode<4.1'>
+              {{authStatsData.googleMode | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#4285F4;">Google</span> STD</td>
 				<td>0.46</td>
-				<td>{{authStatsData.googleStdev}}</td>
+				<td>
+            <div *ngIf="authStatsData.googleStdev>=0.46">
+               {{authStatsData.googleStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.googleStdev<0.46'>
+              {{authStatsData.googleStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <br>
 			  <tr>
 				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Mean</td>
 				<td>3.81</td>
-				<td>{{authStatsData.yelpMean}}</td>
+				<td>
+            <div *ngIf="authStatsData.yelpMean>=3.81">
+               {{authStatsData.yelpMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.yelpMean<3.81'>
+              {{authStatsData.yelpMean | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Median</td>
-				<td>4</td>
-				<td>{{authStatsData.yelpMedian}}</td>
+				<td>4.00</td>
+				<td>
+            <div *ngIf="authStatsData.yelpMedian>=4">
+               {{authStatsData.yelpMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.yelpMedian<4'>
+              {{authStatsData.yelpMedian | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> Mode</td>
-				<td>4</td>
-				<td>{{authStatsData.yelpMode}}</td>
+				<td>4.00</td>
+				<td>
+            <div *ngIf="authStatsData.yelpMode>=4">
+               {{authStatsData.yelpMode | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.yelpMode<4'>
+              {{authStatsData.yelpMode | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			  <tr>
 				<td style="text-align:left"><span style="color:#D9252E;">Yelp</span> STD</td>
 				<td>0.92</td>
-				<td>{{authStatsData.yelpStdev}}</td>
+				<td>
+            <div *ngIf="authStatsData.yelpStdev>=0.92">
+               {{authStatsData.yelpStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/greenarrow.png">
+            </div>
+            <div *ngIf='authStatsData.yelpStdev<0.92'>
+              {{authStatsData.yelpStdev | number : '1.2-2'}}
+               <img class="width10pc" src="assets/images/redarrow.png">
+            </div>
+        </td>
 			  </tr>
 			</tbody>
 		  </table>

@@ -15,3 +15,8 @@ ng2-auto-complete{
 div#councilPickerContainer div {
   margin-left: 25% !important;
 }
+
+img.width10pc{
+  width:10%;
+  float:right
+}
