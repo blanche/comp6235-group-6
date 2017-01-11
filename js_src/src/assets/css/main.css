@@ -137,7 +137,7 @@ h4, .h04 {
 	line-height: 1.76;
 }
 h5, .h05 {
-	font-size: 1.4rem;
+	font-size: 2rem;
 	line-height: 1.7;
 	text-transform: uppercase;
 	letter-spacing: .15rem;
@@ -734,7 +734,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 .section-intro h5 {
 	color: rgba(56, 66, 78, 0.5);
-	font-size: 1.6rem;
+	font-size: 2.2rem;
 	line-height: 1.875;
 	margin-bottom: 0.3rem;
 	letter-spacing: .4rem;
@@ -917,6 +917,7 @@ a.menu-toggle {
 }
 .main-navigation li.current a {
 	color: #FFFFFF;
+	font-size:20px;
 }
 .main-navigation li.current a::after {
 	position: absolute;
@@ -963,6 +964,7 @@ a.menu-toggle {
 
 /* navigation links */
 .main-navigation li a {
+	font-size:13px;
 	display: block;
 	padding: 18px 7px;
 	line-height: 30px;
@@ -1090,8 +1092,10 @@ a.menu-toggle {
 		height: auto;
 		clear: both;
 		display: none;
+		font-size:20px;
 	}
 	.main-navigation > li {
+		font-size:20px;
 		display: block;
 		height: auto;
 		text-align: left;
@@ -1100,8 +1104,10 @@ a.menu-toggle {
 	}
 	.main-navigation > li:first-child {
 		border-top: 1px dotted rgba(200, 200, 200, 0.08);
+		font-size:20px;
 	}
 	.main-navigation li a {
+		font-size:20px;
 		display: block;
 		color: #e6e6e6;
 		width: auto;
@@ -1111,6 +1117,7 @@ a.menu-toggle {
 	}
 	.main-navigation li a:hover {
 		color: #ff7b29;
+		font-size:20px;
 	}
 	.main-navigation li.with-sep a {
 		padding-left: 0;
